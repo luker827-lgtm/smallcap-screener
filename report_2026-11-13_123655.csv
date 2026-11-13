@@ -1,0 +1,88 @@
+ticker,score,close,P/E,Fwd P/E,PEG,market_cap_m,rev_growth,sector,flags
+PANL,85,9.46,8.4,11.0,,619,0.299,Industrials,Insider buying (7); Funds adding; Analysts positive
+UGP,85,5.63,9.1,9.6,0.78,5993,0.2,Energy,Funds adding; Undervalued (PEG 0.78); Analysts positive
+SHLS,85,8.07,36.7,13.7,0.59,1360,0.438,Technology,Insider selling (13); Funds adding; Undervalued (PEG 0.59); Analysts positive
+PAYS,70,9.49,28.8,15.4,,540,0.426,Technology,Insider selling (33); Funds adding; Analysts positive
+TGB,70,6.97,43.6,9.6,0.33,2556,0.968,Basic Materials,Funds adding; Undervalued (PEG 0.33); Analysts positive
+RMNI,65,5.59,50.8,11.5,0.88,518,0.083,Technology,Insider selling (62); Funds adding; Undervalued (PEG 0.88); Analysts positive
+PAYO,65,7.18,51.3,18.4,,2433,0.022,Technology,Quiet accumulation; Insider selling (10); Funds adding
+TAL,65,9.95,7.6,8.1,2.13,5519,0.155,Consumer Defensive,Quiet accumulation; Insider selling (2); Funds adding; Expensive (PEG 2.13); Analysts positive
+VMET,65,8.15,22.6,,,887,3.919,Basic Materials,Funds adding
+UPWK,60,9.86,12.2,8.9,0.85,1240,-0.08,Communication Services,Insider selling (76); Funds adding; Undervalued (PEG 0.85); High short interest 21%
+SBSW,60,8.86,7.4,3.6,,6409,0.643,Basic Materials,Insider buying (1); Funds trimming; Analysts positive
+PTLO,60,6.68,29.0,22.9,,486,0.07,Consumer Cyclical,Insider buying (8); Funds adding
+XMAX,60,6.56,12.6,,,426,0.071,Consumer Cyclical,Quiet accumulation; Funds adding; Earnings in 3 days
+VMD,60,9.11,24.0,22.8,1.89,345,0.122,Healthcare,Insider selling (11); Funds adding
+TTI,60,6.37,91.0,21.2,1.82,945,0.096,Energy,Insider buying (5); Funds adding; Analysts positive; Dilution >10% in a year
+QUAD,60,7.54,13.5,5.3,0.84,384,-0.002,Industrials,Quiet accumulation; Funds adding; Undervalued (PEG 0.84); Analysts positive
+SWIM,55,8.19,102.4,30.7,,964,0.125,Industrials,Funds adding
+SCZM,50,7.05,16.8,,,656,0.548,Basic Materials,Funds adding; Earnings in 13 days
+RUN,50,8.52,4.3,29.9,3.07,2062,0.517,Technology,Insider selling (99); Funds adding; Expensive (PEG 3.07); High short interest 35%; Analysts positive
+PICS,50,6.96,3.6,2.2,,902,0.67,Technology,Insider buying (11); Funds adding; Analysts positive; Dilution >10% in a year; Earnings in 3 days
+ORN,50,7.65,54.6,18.9,28.96,311,0.138,Industrials,Insider buying (6); Funds adding; Expensive (PEG 28.96); Very Expensive (P/E 54.6)
+OIS,45,8.55,,13.4,1.01,511,0.028,Energy,Insider selling (2); Funds adding; Analysts positive
+PAGS,45,7.82,5.5,4.2,,2156,-0.002,Technology,Insider selling (7); Funds adding; High short interest 16%; Earnings in 3 days
+QBTS,45,9.84,,-25.2,,3736,0.207,Technology,Insider selling (58); Funds adding; High short interest 25%; Analysts positive
+QUBT,45,5.82,,-20.5,,1321,23.74,Technology,Insider selling (12); Funds adding; High short interest 34%; Analysts positive
+SOPH,45,7.86,,-14.3,,673,0.247,Healthcare,Quiet accumulation; Insider selling (113); Funds adding; Analysts positive; Dilution >10% in a year
+UUUU,45,6.68,,13.8,,1769,0.648,Energy,Insider selling (32); Funds adding; High short interest 22%; Analysts positive
+SB,40,8.11,10.5,11.3,3.33,923,0.246,Industrials,Funds adding; Expensive (PEG 3.33); Analysts positive; Dilution >10% in a year
+XRAY,40,9.24,,7.4,0.66,1842,-0.075,Healthcare,Insider buying (14); Funds adding; Undervalued (PEG 0.66)
+TDOC,40,8.69,,-15.7,,1584,-0.034,Healthcare,Quiet accumulation; Insider selling (64); Funds adding; High short interest 18%
+TKNO,40,8.3,,-59.2,,522,0.215,Healthcare,Insider buying (2); Funds adding; Analysts positive; Dilution >10% in a year
+WEN,40,8.18,16.0,16.4,1.54,1564,-0.005,Consumer Cyclical,Insider buying (8); Funds adding; High short interest 36%
+RSKD,40,9.42,,22.8,,1244,0.407,Technology,Insider selling (51); Funds adding
+TLX,40,9.36,93.6,-350.4,,3171,0.223,Healthcare,Funds adding
+PTON,35,5.53,18.4,21.3,,2466,0.015,Consumer Cyclical,Insider selling (71); Funds adding
+WB,35,6.12,5.1,4.9,0.79,1504,0.02,Communication Services,Funds trimming; Undervalued (PEG 0.79); High short interest 20%; Earnings in 4 days
+ONDS,35,5.32,,-266.0,,3098,15.586,Technology,Insider selling (18); Funds adding; High short interest 42%; Analysts positive; Dilution >10% in a year
+PUMP,35,7.39,369.5,44.2,,908,0.209,Energy,Insider selling (8); Funds adding; High short interest 17%; Analysts positive; Dilution >10% in a year
+XPEV,35,9.46,,-266.0,,9062,0.08,Consumer Cyclical,Funds adding; Analysts positive; Earnings in 3 days
+SNDX,35,9.54,,-12.2,,859,0.816,Healthcare,Insider selling (16); Funds adding; High short interest 21%; Analysts positive
+SVM,35,8.95,47.1,6.4,,1980,-0.135,Basic Materials,Funds adding; Analysts positive
+STUB,35,5.05,,8.9,,1945,0.072,Communication Services,Insider selling (21); Funds adding; Analysts positive
+SRTA,35,5.77,,,,515,0.503,Healthcare,Insider selling (22); Funds trimming; Analysts positive
+RIG,35,5.32,12.4,19.0,1.17,5942,-0.089,Energy,Insider selling (19); Funds adding; High short interest 32%
+SNAP,35,5.22,,6.6,0.26,9013,0.143,Communication Services,Insider selling (94); Funds adding; Undervalued (PEG 0.26)
+VYX,30,9.96,19.9,9.0,2.68,1353,-0.204,Technology,Insider buying (2); Funds adding; Expensive (PEG 2.68); High short interest 41%; Analysts positive
+PBYI,30,8.08,17.6,23.1,,418,0.011,Healthcare,Insider selling (28); Funds adding
+PRTH,30,7.91,16.5,6.3,,653,0.113,Technology,Insider selling (16); Funds adding
+WEST,30,8.4,,46.7,,841,-0.154,Consumer Defensive,Insider buying (19); Funds adding; High short interest 17%; Analysts positive
+TLS,30,7.72,,23.1,,568,0.073,Technology,Insider selling (28); Funds adding
+ULCC,30,7.7,,32.2,,1774,0.529,Industrials,Insider selling (50); Funds adding; High short interest 39%
+UEC,30,6.8,,-91.9,1.37,3370,0.0,Energy,Insider selling (1); Funds adding; High short interest 17%; Analysts positive
+TASK,30,9.0,8.2,6.1,,826,0.054,Technology,Insider selling (8); Funds adding
+SLSR,30,6.91,,-23.6,,1154,0.0,Basic Materials,Quiet accumulation; Funds adding; Earnings in 0 days
+RYAM,30,5.48,,4.6,2.63,371,0.084,Basic Materials,Insider buying (3); Funds adding; Expensive (PEG 2.63); Analysts positive
+SGML,30,5.01,,2.2,,564,2.239,Basic Materials,Funds adding; Earnings in 0 days
+XPER,25,6.15,,4.7,,300,0.021,Technology,Funds adding; Analysts positive
+RUM,25,5.71,,-8.2,,2284,2.9,Communication Services,Insider selling (7); Funds adding; High short interest 21%; Analysts positive; Dilution >10% in a year
+VLRS,25,8.12,,-20.1,13.48,933,0.324,Industrials,Insider selling (1); Funds adding; Expensive (PEG 13.48); Analysts positive
+ORIC,25,8.5,,-5.0,,881,0.0,Healthcare,Insider selling (22); Funds adding; Analysts positive; Earnings in 0 days
+OCUL,25,6.28,,-3.9,,1382,-0.115,Healthcare,Insider selling (51); Funds adding; High short interest 16%; Analysts positive
+PEPG,25,5.04,,-4.3,,349,0.0,Healthcare,Insider selling (6); Funds adding; Analysts positive
+PRTA,25,8.23,,-6.6,,423,-0.743,Healthcare,Insider buying (15); Funds trimming; High short interest 19%
+SPIR,25,9.28,,-18.2,,364,0.421,Industrials,Insider selling (41); Funds adding; Analysts positive; Dilution >10% in a year
+SMWB,25,7.96,,25.5,,702,0.088,Technology,Insider selling (7); Funds adding; Analysts positive; Earnings in 4 days
+TMCI,25,5.34,,-6.3,,350,-0.042,Healthcare,Insider buying (7); Funds adding
+RMIX,25,8.12,21.4,26.5,,613,1.462,Basic Materials,Insider selling (2); Funds adding; Analysts positive; Dilution >10% in a year; Earnings in 0 days
+TRIP,25,7.26,,9.3,0.98,855,-0.111,Consumer Cyclical,Insider selling (9); Funds adding; Undervalued (PEG 0.98); High short interest 37%
+RGC,20,5.12,,,,2541,0.0,Healthcare,Funds adding
+POET,20,5.21,,-30.6,,902,1.123,Technology,Funds adding; Dilution >10% in a year; Earnings in 3 days
+STNE,20,7.72,3.0,3.5,,1780,0.016,Technology,Insider selling (3); Funds adding
+VITL,20,8.97,,154.7,,385,-0.084,Consumer Defensive,Insider selling (52); Funds adding; High short interest 32%
+TDAY,20,6.86,,22.1,0.94,1014,-0.074,Communication Services,Funds trimming; Undervalued (PEG 0.94); High short interest 16%; Analysts positive
+VSTM,15,8.44,,-5.4,,1064,1.136,Healthcare,Insider selling (46); Funds adding; High short interest 16%; Analysts positive; Dilution >10% in a year
+PHAT,15,6.23,,6.5,,506,0.711,Healthcare,Insider selling (9); Funds adding; Analysts positive; Dilution >10% in a year
+RDW,15,8.03,,-26.5,,2009,0.054,Industrials,Insider selling (16); Funds adding; High short interest 23%; Analysts positive; Dilution >10% in a year
+SSYS,15,5.81,,38.7,2.06,512,-0.003,Technology,Funds adding; Expensive (PEG 2.06); Analysts positive
+SLS,15,8.03,,-80.3,,1622,0.0,Healthcare,Insider buying (4); Funds adding; High short interest 28%; Dilution >10% in a year
+QUIT,15,6.29,,-9.2,17.68,649,0.0,Healthcare,Funds adding; Expensive (PEG 17.68); High short interest 17%; Analysts positive
+SECZ,10,8.39,,-419.5,,1370,-0.054,Technology,Insider buying (1); Funds adding; Analysts positive; Dilution >10% in a year
+XXI,10,5.0,,,,3257,0.0,Consumer Defensive,Funds trimming; Earnings in 0 days
+RES,10,5.62,,18.0,16.77,1245,0.046,Energy,Funds adding; Expensive (PEG 16.77); High short interest 40%
+OLMA,5,7.52,,-2.6,,659,0.0,Healthcare,Insider selling (19); Funds adding; High short interest 24%; Analysts positive; Dilution >10% in a year
+TWI,5,5.15,,27.8,11.7,333,-0.062,Industrials,Insider selling (4); Funds adding; Expensive (PEG 11.70); Analysts positive
+SLDB,5,7.0,,-4.4,,781,0.0,Healthcare,Insider selling (44); Funds adding; Analysts positive; Dilution >10% in a year
+USAR,5,8.07,,-11.8,,3027,0.0,Basic Materials,Insider selling (3); Funds adding; High short interest 16%; Analysts positive; Dilution >10% in a year
+RGNX,-5,8.03,,-2.4,,531,-0.692,Healthcare,Insider selling (8); Funds adding; High short interest 16%; Analysts positive; Dilution >10% in a year
