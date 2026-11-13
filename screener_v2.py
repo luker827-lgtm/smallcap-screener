@@ -1,4 +1,4 @@
-# screener_v2.py
+# screener_v3.py
 # pip install yfinance pandas requests tenacity
 import io, os, math, time, datetime as dt
 from pathlib import Path
@@ -13,13 +13,12 @@ from tenacity import retry, stop_after_attempt, wait_exponential
 MIN_PRICE, MAX_PRICE   = 5, 10
 MIN_CAP, MAX_CAP       = 300e6, 10e9
 MIN_AVG_VOL            = 200_000
-MIN_DOLLAR_VOL         = 1_000_000      # avg vol * price
+MIN_DOLLAR_VOL         = 1_000_000
 BATCH_SIZE             = 100
 OUT_DIR                = Path(".")
 
 # ---------------- Helpers ----------------
 def _num(x, default=0):
-    """Coerce yfinance's NaN/None/np-scalar soup to a real float."""
     if x is None: return default
     try:
         f = float(x)
@@ -61,7 +60,6 @@ def price_volume_filter(tickers):
         if data is None or data.empty:
             continue
 
-        # Data can be single-level if only one ticker came back
         if not isinstance(data.columns, pd.MultiIndex):
             data.columns = pd.MultiIndex.from_product([[batch[0]], data.columns])
 
@@ -80,7 +78,7 @@ def price_volume_filter(tickers):
             if avgvol * close < MIN_DOLLAR_VOL:
                 continue
             keep[t] = d
-        time.sleep(1.0)  # be nice to Yahoo
+        time.sleep(1.0)
     return keep
 
 # ---------------- Stage 2: per-ticker analysis ----------------
@@ -145,6 +143,11 @@ def analyse(t, d):
     if not (MIN_CAP <= cap <= MAX_CAP):
         return None
 
+    # Filter out slow-moving sectors (Optional - delete these 2 lines if you want to keep Financials/Utilities)
+    sector = info.get("sector")
+    if sector in ["Financial Services", "Utilities", "Real Estate"]:
+        return None
+
     score, flags = 0, []
 
     rev_g   = _num(info.get("revenueGrowth"))
@@ -160,7 +163,6 @@ def analyse(t, d):
         score += 10
 
     vol_ratio, move = accumulation(d)
-    # Quiet accumulation: volume up, price flat-to-slightly-up
     if vol_ratio > 1.3 and -0.03 < move < 0.06:
         score += 20
         flags.append("Quiet accumulation")
@@ -179,6 +181,24 @@ def analyse(t, d):
                 flags.append("Funds trimming")
     except Exception:
         pass
+
+    # --- Valuation Metrics ---
+    pe_ratio = _num(info.get("trailingPE"))
+    forward_pe = _num(info.get("forwardPE"))
+    peg_ratio = _num(info.get("pegRatio"))
+
+    if 0 < peg_ratio < 1.0:
+        score += 15
+        flags.append(f"Undervalued (PEG {peg_ratio:.2f})")
+    elif 1.0 <= peg_ratio < 2.0:
+        score += 5
+    elif peg_ratio >= 2.0:
+        score -= 10
+        flags.append(f"Expensive (PEG {peg_ratio:.2f})")
+        
+    if pe_ratio > 50 and peg_ratio > 2.0:
+        score -= 10
+        flags.append(f"Very Expensive (P/E {pe_ratio:.1f})")
 
     short = _num(info.get("shortPercentOfFloat"))
     if short > 0.15:
@@ -199,10 +219,12 @@ def analyse(t, d):
         "ticker":       t,
         "score":        score,
         "close":        round(float(d["Close"].iloc[-1]), 2),
+        "P/E":          round(pe_ratio, 1) if pe_ratio else None,
+        "Fwd P/E":      round(forward_pe, 1) if forward_pe else None,
+        "PEG":          round(peg_ratio, 2) if peg_ratio else None,
         "market_cap_m": round(cap / 1e6),
         "rev_growth":   round(rev_g, 3),
-        "vol_ratio":    round(vol_ratio, 2),
-        "sector":       info.get("sector"),
+        "sector":       sector,
         "flags":        "; ".join(flags),
     }
 
