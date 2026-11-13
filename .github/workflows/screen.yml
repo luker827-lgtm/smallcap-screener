@@ -1,0 +1,35 @@
+name: Run Stock Screener
+
+on:
+  workflow_dispatch: # Lets you run it manually from your phone
+  schedule:
+    - cron: '30 21 * * 1-5' # Runs at 21:30 UTC (after US market close) Mon-Fri
+
+permissions:
+  contents: write # Crucial: Allows the script to save CSVs back to the repo
+
+jobs:
+  run-screener:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run screener
+        run: python screener_v2.py
+
+      - name: Commit and push results
+        run: |
+          git config --global user.name "GitHub Action Bot"
+          git config --global user.email "actions@github.com"
+          git add report_*.csv track_record.csv || true
+          git commit -m "Automated results" || echo "No changes to commit"
+          git push
