@@ -10,8 +10,8 @@ import yfinance as yf
 from tenacity import retry, stop_after_attempt, wait_exponential
 
 # ---------------- Config ----------------
-MIN_PRICE, MAX_PRICE   = 5, 20        # RAISED CEILING TO $20
-MIN_CAP, MAX_CAP       = 300e6, 15e9  # RAISED CAP TO $15B
+MIN_PRICE, MAX_PRICE   = 5, 20
+MIN_CAP, MAX_CAP       = 300e6, 15e9
 MIN_AVG_VOL            = 200_000
 MIN_DOLLAR_VOL         = 1_000_000
 BATCH_SIZE             = 100
@@ -131,10 +131,10 @@ def analyse(t, d):
     if not (MIN_CAP <= cap <= MAX_CAP):
         return None
 
-    # Sector Filter (Optional: you can remove Utilities/Real Estate/Financials if you want)
     sector = info.get("sector")
-    if sector in ["Financial Services", "Utilities", "Real Estate"]:
-        return None
+    # Commented out the sector filter to broaden the search
+    # if sector in ["Financial Services", "Utilities", "Real Estate"]:
+    #    return None
 
     score, flags = 0, []
 
@@ -144,7 +144,7 @@ def analyse(t, d):
 
     if fcf <= 0:
         return None 
-    if debt_eq > 150:
+    if debt_eq > 250:  # Loosened from 150 to 250
         return None
         
     score += 15
@@ -242,12 +242,16 @@ def main():
             rows.append(r)
     print(f"Scored: {len(rows)}  (skipped/failed: {skipped})")
 
+    stamp = dt.datetime.now().strftime("%Y-%m-%d_%H%M%S")
+    
     if not rows:
-        print("No candidates.")
+        print("No candidates passed the filters today.")
+        # THE FIX: Create a file that says "No candidates" so GitHub doesn't break
+        empty_df = pd.DataFrame([{"ticker": "NONE", "score": 0, "flags": "No stocks passed the filters today. Market might be too volatile or filters too strict."}])
+        empty_df.to_csv(OUT_DIR / f"report_{stamp}_EMPTY.csv", index=False, sep=",", encoding="utf-8")
         return
 
     out = pd.DataFrame(rows).sort_values("score", ascending=False)
-    stamp = dt.datetime.now().strftime("%Y-%m-%d_%H%M%S")
     
     # FIXED CSV FORMATTING HERE
     out.to_csv(OUT_DIR / f"report_{stamp}.csv", index=False, sep=",", encoding="utf-8")
