@@ -1,4 +1,4 @@
-# screener_v3.py
+# screener_v4.py
 # pip install yfinance pandas requests tenacity
 import io, os, math, time, datetime as dt
 from pathlib import Path
@@ -10,9 +10,9 @@ import yfinance as yf
 from tenacity import retry, stop_after_attempt, wait_exponential
 
 # ---------------- Config ----------------
-MIN_PRICE, MAX_PRICE   = 5, 20
-MIN_CAP, MAX_CAP       = 300e6, 15e9
-MIN_AVG_VOL            = 200_000
+MIN_PRICE, MAX_PRICE   = 10, 50        # Mid-cap range
+MIN_CAP, MAX_CAP       = 2e9, 50e9     # $2B to $50B
+MIN_AVG_VOL            = 1_000_000
 MIN_DOLLAR_VOL         = 1_000_000
 BATCH_SIZE             = 100
 OUT_DIR                = Path(".")
@@ -131,20 +131,29 @@ def analyse(t, d):
     if not (MIN_CAP <= cap <= MAX_CAP):
         return None
 
+    # --- GROK'S FIXES ---
+    
+    # 1. Reject if financials are in a foreign currency
+    if info.get("financialCurrency") != "USD":
+        return None
+
+    # 2. Reject funds, BDCs, and trusts
+    name = info.get("longName", "").lower()
+    if "fund" in name or "trust" in name or "municipal" in name or "income" in name:
+        return None
+        
     sector = info.get("sector")
-    # Commented out the sector filter to broaden the search
-    # if sector in ["Financial Services", "Utilities", "Real Estate"]:
-    #    return None
+    # We are leaving the sector filter off, but the fund filter above will catch the BDCs
 
     score, flags = 0, []
 
-    # --- QUALITY FILTER (The Rubbish Remover) ---
+    # --- QUALITY FILTER ---
     fcf = _num(info.get("freeCashflow"))
     debt_eq = _num(info.get("debtToEquity"), 999)
 
     if fcf <= 0:
         return None 
-    if debt_eq > 250:  # Loosened from 150 to 250
+    if debt_eq > 250:
         return None
         
     score += 15
@@ -166,11 +175,13 @@ def analyse(t, d):
         score += 20
         flags.append("Quiet accumulation")
 
-    # --- INSIDERS & FUNDS ---
+    # --- INSIDERS (GROK'S REAL FILTER) ---
     buys, sells = _insider_signal(tk)
     if buys is not None:
-        if buys > sells:   score += 15; flags.append(f"Insider buying ({buys})")
-        elif sells > buys: flags.append(f"Insider selling ({sells})")
+        if buys > sells:   
+            score += 15; flags.append(f"Insider buying ({buys})")
+        else: 
+            return None # Reject if selling >= buying
 
     try:
         inst = tk.institutional_holders
@@ -182,12 +193,12 @@ def analyse(t, d):
     except Exception:
         pass
 
-    # --- VALUATION ---
+    # --- VALUATION (GROK'S PEG FIX) ---
     pe_ratio = _num(info.get("trailingPE"))
     forward_pe = _num(info.get("forwardPE"))
     peg_ratio = _num(info.get("pegRatio"))
 
-    if 0 < peg_ratio < 1.0:
+    if 0.2 < peg_ratio < 1.0:  # Ignore data errors under 0.2
         score += 15
         flags.append(f"Undervalued (PEG {peg_ratio:.2f})")
     elif 1.0 <= peg_ratio < 2.0:
@@ -246,17 +257,14 @@ def main():
     
     if not rows:
         print("No candidates passed the filters today.")
-        # THE FIX: Create a file that says "No candidates" so GitHub doesn't break
-        empty_df = pd.DataFrame([{"ticker": "NONE", "score": 0, "flags": "No stocks passed the filters today. Market might be too volatile or filters too strict."}])
+        empty_df = pd.DataFrame([{"ticker": "NONE", "score": 0, "flags": "No stocks passed the filters today."}])
         empty_df.to_csv(OUT_DIR / f"report_{stamp}_EMPTY.csv", index=False, sep=",", encoding="utf-8")
         return
 
     out = pd.DataFrame(rows).sort_values("score", ascending=False)
     
-    # FIXED CSV FORMATTING HERE
     out.to_csv(OUT_DIR / f"report_{stamp}.csv", index=False, sep=",", encoding="utf-8")
 
-    # Append to track record safely
     tr = OUT_DIR / "track_record.csv"
     header = not tr.exists() or tr.stat().st_size == 0
     out.assign(run=stamp).to_csv(tr, mode="a", header=header, index=False, sep=",", encoding="utf-8")
