@@ -1,4 +1,4 @@
-# screener_v7.py
+# screener_v8.py
 # pip install yfinance pandas requests tenacity
 import io, os, math, time, datetime as dt
 from pathlib import Path
@@ -144,17 +144,20 @@ def analyse(t, d):
 
     score, flags = 0, []
 
-    # --- QUALITY FILTER ---
+    # --- QUALITY FILTER (SOFTENED) ---
     fcf = _num(info.get("freeCashflow"))
     debt_eq = _num(info.get("debtToEquity"), 999)
 
-    if fcf <= 0:
+    if fcf < -10e6:  # Allow up to $10M negative FCF
         return None 
     if debt_eq > 250:
         return None
         
     score += 15
-    flags.append(f"Strong FCF (${fcf/1e6:.1f}M)")
+    if fcf > 0:
+        flags.append(f"Positive FCF (${fcf/1e6:.1f}M)")
+    else:
+        flags.append(f"Negative FCF (${fcf/1e6:.1f}M)")
 
     # --- FUNDAMENTALS ---
     rev_g   = _num(info.get("revenueGrowth"))
@@ -172,13 +175,13 @@ def analyse(t, d):
         score += 20
         flags.append("Quiet accumulation")
 
-    # --- INSIDERS (OPTION A FIX) ---
+    # --- INSIDERS (SOFTENED) ---
     buys, sells = _insider_signal(tk)
     if buys is not None:
         if buys > sells:   
             score += 15; flags.append(f"Insider buying ({buys})")
-        elif sells > (buys * 2): 
-            score -= 15 # Penalty, not a rejection
+        elif sells > (buys * 5): # Only penalize if selling is 5x buying
+            score -= 15 
             flags.append(f"Heavy insider selling ({sells})")
         else:
             flags.append(f"Insider selling ({sells})") 
