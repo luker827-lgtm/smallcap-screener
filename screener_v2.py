@@ -1,4 +1,4 @@
-# screener_v4.py
+# screener_v6.py
 # pip install yfinance pandas requests tenacity
 import io, os, math, time, datetime as dt
 from pathlib import Path
@@ -10,8 +10,8 @@ import yfinance as yf
 from tenacity import retry, stop_after_attempt, wait_exponential
 
 # ---------------- Config ----------------
-MIN_PRICE, MAX_PRICE   = 10, 50        # Mid-cap range
-MIN_CAP, MAX_CAP       = 2e9, 50e9     # $2B to $50B
+MIN_PRICE, MAX_PRICE   = 10, 500       # Allows high-priced large caps
+MIN_CAP, MAX_CAP       = 2e9, 500e9    # $2B to $500 Billion (Mid to Mega Cap)
 MIN_AVG_VOL            = 1_000_000
 MIN_DOLLAR_VOL         = 1_000_000
 BATCH_SIZE             = 100
@@ -143,7 +143,6 @@ def analyse(t, d):
         return None
         
     sector = info.get("sector")
-    # We are leaving the sector filter off, but the fund filter above will catch the BDCs
 
     score, flags = 0, []
 
@@ -175,13 +174,15 @@ def analyse(t, d):
         score += 20
         flags.append("Quiet accumulation")
 
-    # --- INSIDERS (GROK'S REAL FILTER) ---
+    # --- INSIDERS (LOOSENED FILTER) ---
     buys, sells = _insider_signal(tk)
     if buys is not None:
         if buys > sells:   
             score += 15; flags.append(f"Insider buying ({buys})")
-        else: 
-            return None # Reject if selling >= buying
+        elif sells > (buys * 2): 
+            return None # Only reject if selling is more than double the buying
+        else:
+            flags.append(f"Insider selling ({sells})") # Keep it, but flag it
 
     try:
         inst = tk.institutional_holders
