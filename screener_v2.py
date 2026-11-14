@@ -10,8 +10,8 @@ import yfinance as yf
 from tenacity import retry, stop_after_attempt, wait_exponential
 
 # ---------------- Config ----------------
-MIN_PRICE, MAX_PRICE   = 5, 10
-MIN_CAP, MAX_CAP       = 300e6, 10e9
+MIN_PRICE, MAX_PRICE   = 5, 20        # RAISED CEILING TO $20
+MIN_CAP, MAX_CAP       = 300e6, 15e9  # RAISED CAP TO $15B
 MIN_AVG_VOL            = 200_000
 MIN_DOLLAR_VOL         = 1_000_000
 BATCH_SIZE             = 100
@@ -120,18 +120,6 @@ def _earnings_days(info, tk):
     except Exception:
         return None
 
-def _dilution_flag(tk):
-    try:
-        so = tk.get_shares_full(start=dt.date.today() - dt.timedelta(days=365))
-        if so is None or len(so) < 2:
-            return False
-        so = so.sort_index().dropna()
-        if len(so) < 2 or so.iloc[0] <= 0:
-            return False
-        return so.iloc[-1] > so.iloc[0] * 1.10
-    except Exception:
-        return False
-
 def analyse(t, d):
     try:
         tk   = yf.Ticker(t)
@@ -143,30 +131,42 @@ def analyse(t, d):
     if not (MIN_CAP <= cap <= MAX_CAP):
         return None
 
-    # Filter out slow-moving sectors (Optional - delete these 2 lines if you want to keep Financials/Utilities)
+    # Sector Filter (Optional: you can remove Utilities/Real Estate/Financials if you want)
     sector = info.get("sector")
     if sector in ["Financial Services", "Utilities", "Real Estate"]:
         return None
 
     score, flags = 0, []
 
+    # --- QUALITY FILTER (The Rubbish Remover) ---
+    fcf = _num(info.get("freeCashflow"))
+    debt_eq = _num(info.get("debtToEquity"), 999)
+
+    if fcf <= 0:
+        return None 
+    if debt_eq > 150:
+        return None
+        
+    score += 15
+    flags.append(f"Strong FCF (${fcf/1e6:.1f}M)")
+
+    # --- FUNDAMENTALS ---
     rev_g   = _num(info.get("revenueGrowth"))
     earn_g  = _num(info.get("earningsGrowth"))
     margin  = _num(info.get("profitMargins"))
-    debt_eq = info.get("debtToEquity")
 
     if rev_g > 0.15:   score += 20
     elif rev_g > 0.05: score += 10
     if earn_g > 0:     score += 15
     if margin > 0:     score += 10
-    if debt_eq is not None and _num(debt_eq, 999) < 100:
-        score += 10
 
+    # --- ACCUMULATION ---
     vol_ratio, move = accumulation(d)
     if vol_ratio > 1.3 and -0.03 < move < 0.06:
         score += 20
         flags.append("Quiet accumulation")
 
+    # --- INSIDERS & FUNDS ---
     buys, sells = _insider_signal(tk)
     if buys is not None:
         if buys > sells:   score += 15; flags.append(f"Insider buying ({buys})")
@@ -182,7 +182,7 @@ def analyse(t, d):
     except Exception:
         pass
 
-    # --- Valuation Metrics ---
+    # --- VALUATION ---
     pe_ratio = _num(info.get("trailingPE"))
     forward_pe = _num(info.get("forwardPE"))
     peg_ratio = _num(info.get("pegRatio"))
@@ -195,11 +195,8 @@ def analyse(t, d):
     elif peg_ratio >= 2.0:
         score -= 10
         flags.append(f"Expensive (PEG {peg_ratio:.2f})")
-        
-    if pe_ratio > 50 and peg_ratio > 2.0:
-        score -= 10
-        flags.append(f"Very Expensive (P/E {pe_ratio:.1f})")
 
+    # --- OTHER FLAGS ---
     short = _num(info.get("shortPercentOfFloat"))
     if short > 0.15:
         flags.append(f"High short interest {short:.0%}")
@@ -207,9 +204,6 @@ def analyse(t, d):
     rec = _num(info.get("recommendationMean"), default=99)
     if 0 < rec <= 2:
         score += 5; flags.append("Analysts positive")
-
-    if _dilution_flag(tk):
-        score -= 20; flags.append("Dilution >10% in a year")
 
     days = _earnings_days(info, tk)
     if days is not None and 0 <= days <= 14:
@@ -254,12 +248,14 @@ def main():
 
     out = pd.DataFrame(rows).sort_values("score", ascending=False)
     stamp = dt.datetime.now().strftime("%Y-%m-%d_%H%M%S")
-    out.to_csv(OUT_DIR / f"report_{stamp}.csv", index=False)
+    
+    # FIXED CSV FORMATTING HERE
+    out.to_csv(OUT_DIR / f"report_{stamp}.csv", index=False, sep=",", encoding="utf-8")
 
     # Append to track record safely
     tr = OUT_DIR / "track_record.csv"
     header = not tr.exists() or tr.stat().st_size == 0
-    out.assign(run=stamp).to_csv(tr, mode="a", header=header, index=False)
+    out.assign(run=stamp).to_csv(tr, mode="a", header=header, index=False, sep=",", encoding="utf-8")
 
     print("\nTop 25:\n")
     print(out.head(25).to_string(index=False))
