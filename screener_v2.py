@@ -1,4 +1,4 @@
-# screener_v6.py
+# screener_v7.py
 # pip install yfinance pandas requests tenacity
 import io, os, math, time, datetime as dt
 from pathlib import Path
@@ -10,8 +10,8 @@ import yfinance as yf
 from tenacity import retry, stop_after_attempt, wait_exponential
 
 # ---------------- Config ----------------
-MIN_PRICE, MAX_PRICE   = 10, 500       # Allows high-priced large caps
-MIN_CAP, MAX_CAP       = 2e9, 500e9    # $2B to $500 Billion (Mid to Mega Cap)
+MIN_PRICE, MAX_PRICE   = 10, 500       
+MIN_CAP, MAX_CAP       = 2e9, 500e9    
 MIN_AVG_VOL            = 1_000_000
 MIN_DOLLAR_VOL         = 1_000_000
 BATCH_SIZE             = 100
@@ -133,11 +133,9 @@ def analyse(t, d):
 
     # --- GROK'S FIXES ---
     
-    # 1. Reject if financials are in a foreign currency
     if info.get("financialCurrency") != "USD":
         return None
 
-    # 2. Reject funds, BDCs, and trusts
     name = info.get("longName", "").lower()
     if "fund" in name or "trust" in name or "municipal" in name or "income" in name:
         return None
@@ -174,15 +172,16 @@ def analyse(t, d):
         score += 20
         flags.append("Quiet accumulation")
 
-    # --- INSIDERS (LOOSENED FILTER) ---
+    # --- INSIDERS (OPTION A FIX) ---
     buys, sells = _insider_signal(tk)
     if buys is not None:
         if buys > sells:   
             score += 15; flags.append(f"Insider buying ({buys})")
         elif sells > (buys * 2): 
-            return None # Only reject if selling is more than double the buying
+            score -= 15 # Penalty, not a rejection
+            flags.append(f"Heavy insider selling ({sells})")
         else:
-            flags.append(f"Insider selling ({sells})") # Keep it, but flag it
+            flags.append(f"Insider selling ({sells})") 
 
     try:
         inst = tk.institutional_holders
@@ -194,12 +193,12 @@ def analyse(t, d):
     except Exception:
         pass
 
-    # --- VALUATION (GROK'S PEG FIX) ---
+    # --- VALUATION ---
     pe_ratio = _num(info.get("trailingPE"))
     forward_pe = _num(info.get("forwardPE"))
     peg_ratio = _num(info.get("pegRatio"))
 
-    if 0.2 < peg_ratio < 1.0:  # Ignore data errors under 0.2
+    if 0.2 < peg_ratio < 1.0: 
         score += 15
         flags.append(f"Undervalued (PEG {peg_ratio:.2f})")
     elif 1.0 <= peg_ratio < 2.0:
