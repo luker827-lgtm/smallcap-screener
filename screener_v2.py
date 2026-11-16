@@ -1,4 +1,4 @@
-# screener_v8.py
+# screener_v9_FINAL.py
 # pip install yfinance pandas requests tenacity
 import io, os, math, time, datetime as dt
 from pathlib import Path
@@ -49,12 +49,17 @@ def _download(batch):
 # ---------------- Stage 1: price / volume ----------------
 def price_volume_filter(tickers):
     keep = {}
+    total_batches = (len(tickers) + BATCH_SIZE - 1) // BATCH_SIZE
+    
     for i in range(0, len(tickers), BATCH_SIZE):
         batch = tickers[i:i + BATCH_SIZE]
+        batch_num = (i // BATCH_SIZE) + 1
+        print(f"Processing batch {batch_num}/{total_batches} ({batch[0]} to {batch[-1]})...")
+        
         try:
             data = _download(batch)
         except Exception as e:
-            print(f"[batch {i}] download failed: {e}")
+            print(f"  [batch {batch_num}] download failed: {e}")
             continue
 
         if data is None or data.empty:
@@ -127,28 +132,25 @@ def analyse(t, d):
     except Exception:
         return None
 
+    # --- QUICK FILTERS FIRST (Saves Time) ---
     cap = _num(info.get("marketCap"))
     if not (MIN_CAP <= cap <= MAX_CAP):
         return None
-
-    # --- GROK'S FIXES ---
-    
+        
     if info.get("financialCurrency") != "USD":
         return None
 
     name = info.get("longName", "").lower()
     if "fund" in name or "trust" in name or "municipal" in name or "income" in name:
         return None
-        
-    sector = info.get("sector")
 
     score, flags = 0, []
 
-    # --- QUALITY FILTER (SOFTENED) ---
+    # --- QUALITY FILTER ---
     fcf = _num(info.get("freeCashflow"))
     debt_eq = _num(info.get("debtToEquity"), 999)
 
-    if fcf < -10e6:  # Allow up to $10M negative FCF
+    if fcf < -10e6: 
         return None 
     if debt_eq > 250:
         return None
@@ -175,12 +177,12 @@ def analyse(t, d):
         score += 20
         flags.append("Quiet accumulation")
 
-    # --- INSIDERS (SOFTENED) ---
+    # --- INSIDERS ---
     buys, sells = _insider_signal(tk)
     if buys is not None:
         if buys > sells:   
             score += 15; flags.append(f"Insider buying ({buys})")
-        elif sells > (buys * 5): # Only penalize if selling is 5x buying
+        elif sells > (buys * 5): 
             score -= 15 
             flags.append(f"Heavy insider selling ({sells})")
         else:
@@ -232,7 +234,7 @@ def analyse(t, d):
         "PEG":          round(peg_ratio, 2) if peg_ratio else None,
         "market_cap_m": round(cap / 1e6),
         "rev_growth":   round(rev_g, 3),
-        "sector":       sector,
+        "sector":       info.get("sector"),
         "flags":        "; ".join(flags),
     }
 
