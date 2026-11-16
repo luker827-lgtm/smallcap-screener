@@ -1,9 +1,7 @@
-# screener_v11_GROK_APPROVED.py
+# screener_v12_FINAL.py
 # pip install yfinance pandas requests tenacity
 import io, os, math, time, datetime as dt
 from pathlib import Path
-
-import numpy as np
 import pandas as pd
 import requests
 import yfinance as yf
@@ -11,10 +9,10 @@ from tenacity import retry, stop_after_attempt, wait_exponential
 
 # ---------------- Config ----------------
 MIN_PRICE, MAX_PRICE   = 10, 500       
-MIN_CAP, MAX_CAP       = 2e9, 15e12    # GROK FIX: Allow true mega-caps
-MIN_AVG_VOL            = 250_000       # GROK FIX: Lowered volume
+MIN_CAP, MAX_CAP       = 2e9, 15e12    
+MIN_AVG_VOL            = 250_000       
 MIN_DOLLAR_VOL         = 1_000_000
-BATCH_SIZE             = 100
+BATCH_SIZE             = 50            # SMALLER BATCHES
 OUT_DIR                = Path(".")
 
 # ---------------- Helpers ----------------
@@ -41,10 +39,7 @@ def get_us_tickers():
 
 @retry(stop=stop_after_attempt(2), wait=wait_exponential(multiplier=1, min=3, max=20))
 def _download(batch):
-    return yf.download(
-        batch, period="3mo", group_by="ticker",
-        progress=False, threads=True, auto_adjust=True,
-    )
+    return yf.download(batch, period="3mo", group_by="ticker", progress=False, threads=True, auto_adjust=True)
 
 # ---------------- Stage 1: price / volume ----------------
 def price_volume_filter(tickers):
@@ -62,226 +57,129 @@ def price_volume_filter(tickers):
             print(f"  [batch {batch_num}] download failed: {e}")
             continue
 
-        if data is None or data.empty:
-            continue
-
+        if data is None or data.empty: continue
         if not isinstance(data.columns, pd.MultiIndex):
             data.columns = pd.MultiIndex.from_product([[batch[0]], data.columns])
 
         for t in batch:
-            if t not in data.columns.get_level_values(0):
-                continue
+            if t not in data.columns.get_level_values(0): continue
             d = data[t].dropna()
-            if len(d) < 40 or "Close" not in d or "Volume" not in d:
-                continue
+            if len(d) < 40 or "Close" not in d or "Volume" not in d: continue
             close  = float(d["Close"].iloc[-1])
             avgvol = float(d["Volume"].tail(20).mean())
-            if not (MIN_PRICE <= close <= MAX_PRICE):
-                continue
-            if avgvol < MIN_AVG_VOL:
-                continue
-            if avgvol * close < MIN_DOLLAR_VOL:
-                continue
+            
+            if not (MIN_PRICE <= close <= MAX_PRICE): continue
+            if avgvol < MIN_AVG_VOL: continue
+            if avgvol * close < MIN_DOLLAR_VOL: continue
             keep[t] = d
         time.sleep(1.0)
     return keep
 
 # ---------------- Stage 2: per-ticker analysis ----------------
-def accumulation(d):
-    vol_ratio = d["Volume"].tail(10).mean() / max(d["Volume"].tail(50).mean(), 1)
-    price_move = d["Close"].iloc[-1] / d["Close"].iloc[-10] - 1
-    return float(vol_ratio), float(price_move)
-
-def _insider_signal(tk):
-    try:
-        ins = tk.insider_transactions
-    except Exception:
-        return None, None
-    if ins is None or ins.empty:
-        return 0, 0
-    col = "Text" if "Text" in ins.columns else ("Transaction" if "Transaction" in ins.columns else None)
-    if col is None:
-        return 0, 0
-    txt = ins[col].astype(str).str.lower()
-    buys  = int(txt.str.contains("purchase|buy", regex=True).sum())
-    sells = int(txt.str.contains("sale|sell",       regex=True).sum())
-    return buys, sells
-
-def _earnings_days(info, tk):
-    ed = None
-    try:
-        cal = tk.calendar
-        if isinstance(cal, dict):
-            ed = cal.get("Earnings Date")
-        elif isinstance(cal, pd.DataFrame) and "Earnings Date" in cal.index:
-            ed = cal.loc["Earnings Date"].tolist()
-    except Exception:
-        pass
-    if not ed:
-        return None
-    try:
-        first = pd.Timestamp(ed[0]).date()
-        return (first - dt.date.today()).days
-    except Exception:
-        return None
-
 def analyse(t, d):
     try:
         tk   = yf.Ticker(t)
         info = tk.info or {}
-    except Exception:
-        return None
+        
+        # --- GROK FIXES ---
+        # Reject foreign filers (financialCurrency != USD)
+        if info.get("financialCurrency") not in (None, "USD"): return None
+        
+        # Reject funds/trusts
+        name = (info.get("longName") or "").lower()
+        if any(x in name for x in [" etf", " fund", " trust", " municipal"]): return None
+        
+        cap = _num(info.get("marketCap"))
+        if not (MIN_CAP <= cap <= MAX_CAP): return None
 
-    # --- QUICK FILTERS FIRST ---
-    cap = _num(info.get("marketCap"))
-    if not (MIN_CAP <= cap <= MAX_CAP):
-        return None
+        score, flags = 0, []
 
-    # GROK FIX: Prefer listing currency; allow None
-    if info.get("currency") not in (None, "USD"):
-        return None
-
-    name = (info.get("longName") or "").lower()
-    if any(x in name for x in [" etf", " fund", " trust", " municipal"]):
-        return None
-
-    score, flags = 0, []
-
-    # --- QUALITY FILTER (GROK'S FIX) ---
-    fcf = _num(info.get("freeCashflow"))
-    # Only reject extreme cash burn; missing FCF is allowed
-    if fcf < -50e6:
-        return None
-
-    # GROK FIX: Missing debtToEquity must NOT be treated as 999
-    raw_de = info.get("debtToEquity")
-    if raw_de is not None:
-        debt_eq = _num(raw_de)
-        if debt_eq > 400:          # raised threshold
-            return None
-    # else: unknown → pass
-
-    score += 15
-    if fcf > 0:
-        flags.append(f"Positive FCF (${fcf/1e6:.1f}M)")
-    elif fcf < 0:
-        flags.append(f"Negative FCF (${fcf/1e6:.1f}M)")
-
-    # --- FUNDAMENTALS ---
-    rev_g   = _num(info.get("revenueGrowth"))
-    earn_g  = _num(info.get("earningsGrowth"))
-    margin  = _num(info.get("profitMargins"))
-
-    if rev_g > 0.15:   score += 20
-    elif rev_g > 0.05: score += 10
-    if earn_g > 0:     score += 15
-    if margin > 0:     score += 10
-
-    # --- ACCUMULATION ---
-    vol_ratio, move = accumulation(d)
-    if vol_ratio > 1.3 and -0.03 < move < 0.06:
-        score += 20
-        flags.append("Quiet accumulation")
-
-    # --- INSIDERS ---
-    buys, sells = _insider_signal(tk)
-    if buys is not None:
-        if buys > sells:   
-            score += 15; flags.append(f"Insider buying ({buys})")
-        elif sells > (buys * 5): 
-            score -= 15 
-            flags.append(f"Heavy insider selling ({sells})")
-        else:
-            flags.append(f"Insider selling ({sells})") 
-
-    try:
-        inst = tk.institutional_holders
-        if inst is not None and not inst.empty and "pctChange" in inst.columns:
-            if _num(inst["pctChange"].mean()) > 0:
-                score += 10; flags.append("Funds adding")
-            else:
-                flags.append("Funds trimming")
-    except Exception:
-        pass
-
-    # --- VALUATION ---
-    pe_ratio = _num(info.get("trailingPE"))
-    forward_pe = _num(info.get("forwardPE"))
-    peg_ratio = _num(info.get("pegRatio"))
-
-    if 0.2 < peg_ratio < 1.0: 
+        # --- QUALITY FILTER (Softened) ---
+        fcf = _num(info.get("freeCashflow"))
+        raw_de = info.get("debtToEquity")
+        if raw_de is not None:
+            if _num(raw_de) > 400: return None
+        # Reject extreme cash burn, allow missing FCF
+        if fcf < -50e6: return None
+        
         score += 15
-        flags.append(f"Undervalued (PEG {peg_ratio:.2f})")
-    elif 1.0 <= peg_ratio < 2.0:
-        score += 5
-    elif peg_ratio >= 2.0:
-        score -= 10
-        flags.append(f"Expensive (PEG {peg_ratio:.2f})")
+        if fcf > 0: flags.append(f"Positive FCF (${fcf/1e6:.1f}M)")
+        elif fcf < 0: flags.append(f"Negative FCF (${fcf/1e6:.1f}M)")
 
-    # --- OTHER FLAGS ---
-    short = _num(info.get("shortPercentOfFloat"))
-    if short > 0.15:
-        flags.append(f"High short interest {short:.0%}")
+        # --- FUNDAMENTALS ---
+        rev_g   = _num(info.get("revenueGrowth"))
+        earn_g  = _num(info.get("earningsGrowth"))
+        margin  = _num(info.get("profitMargins"))
+        if rev_g > 0.15:   score += 20
+        elif rev_g > 0.05: score += 10
+        if earn_g > 0:     score += 15
+        if margin > 0:     score += 10
 
-    rec = _num(info.get("recommendationMean"), default=99)
-    if 0 < rec <= 2:
-        score += 5; flags.append("Analysts positive")
+        # --- ACCUMULATION ---
+        vol_ratio = d["Volume"].tail(10).mean() / max(d["Volume"].tail(50).mean(), 1)
+        price_move = d["Close"].iloc[-1] / d["Close"].iloc[-10] - 1
+        if vol_ratio > 1.3 and -0.03 < price_move < 0.06:
+            score += 20; flags.append("Quiet accumulation")
 
-    days = _earnings_days(info, tk)
-    if days is not None and 0 <= days <= 14:
-        flags.append(f"Earnings in {days} days")
+        # --- INSIDERS ---
+        try:
+            ins = tk.insider_transactions
+            if ins is not None and not ins.empty:
+                col = "Text" if "Text" in ins.columns else ("Transaction" if "Transaction" in ins.columns else None)
+                if col:
+                    txt = ins[col].astype(str).str.lower()
+                    buys  = int(txt.str.contains("purchase|buy", regex=True).sum())
+                    sells = int(txt.str.contains("sale|sell",       regex=True).sum())
+                    if buys > sells:   score += 15; flags.append(f"Insider buying ({buys})")
+                    elif sells > (buys * 5): score -= 15; flags.append(f"Heavy insider selling ({sells})")
+                    else: flags.append(f"Insider selling ({sells})")
+        except Exception:
+            pass
 
-    return {
-        "ticker":       t,
-        "score":        score,
-        "close":        round(float(d["Close"].iloc[-1]), 2),
-        "P/E":          round(pe_ratio, 1) if pe_ratio else None,
-        "Fwd P/E":      round(forward_pe, 1) if forward_pe else None,
-        "PEG":          round(peg_ratio, 2) if peg_ratio else None,
-        "market_cap_m": round(cap / 1e6),
-        "rev_growth":   round(rev_g, 3),
-        "sector":       info.get("sector"),
-        "flags":        "; ".join(flags),
-    }
+        # --- VALUATION ---
+        pe_ratio = _num(info.get("trailingPE"))
+        peg_ratio = _num(info.get("pegRatio"))
+        # GROK FIX: Only trust PEG if P/E is positive and PEG is realistic
+        if pe_ratio > 0 and 0.2 < peg_ratio < 1.0: 
+            score += 15; flags.append(f"Undervalued (PEG {peg_ratio:.2f})")
+        elif 1.0 <= peg_ratio < 2.0: score += 5
+        elif peg_ratio >= 2.0: score -= 10; flags.append(f"Expensive (PEG {peg_ratio:.2f})")
+
+        return {
+            "ticker": t, "score": score, "close": round(float(d["Close"].iloc[-1]), 2),
+            "P/E": round(pe_ratio, 1) if pe_ratio else None,
+            "PEG": round(peg_ratio, 2) if peg_ratio else None,
+            "market_cap_m": round(cap / 1e6), "rev_growth": round(rev_g, 3),
+            "sector": info.get("sector"), "flags": "; ".join(flags),
+        }
+    except Exception as e:
+        # CRASH PROOFING: If one ticker fails, skip it, don't kill the run
+        print(f"Error processing {t}: {e}")
+        return None
 
 # ---------------- Main ----------------
 def main():
-    print("Fetching symbol list...")
     universe = get_us_tickers()
     print(f"Universe: {len(universe)} tickers")
-
-    print("Stage 1: price/volume filter...")
     cands = price_volume_filter(universe)
     print(f"Passed price/volume: {len(cands)}")
 
-    print("Stage 2: fundamentals + signals...")
-    rows, skipped = [], 0
+    rows = []
     for t, d in cands.items():
         r = analyse(t, d)
-        if r is None:
-            skipped += 1
-        else:
+        if r is not None:
             rows.append(r)
-    print(f"Scored: {len(rows)}  (skipped/failed: {skipped})")
 
     stamp = dt.datetime.now().strftime("%Y-%m-%d_%H%M%S")
     
     if not rows:
         print("No candidates passed the filters today.")
-        empty_df = pd.DataFrame([{"ticker": "NONE", "score": 0, "flags": "No stocks passed the filters today."}])
-        empty_df.to_csv(OUT_DIR / f"report_{stamp}_EMPTY.csv", index=False, sep=",", encoding="utf-8")
+        pd.DataFrame([{"ticker": "NONE", "score": 0, "flags": "No stocks passed."}]).to_csv(OUT_DIR / f"report_{stamp}_EMPTY.csv", index=False)
         return
 
     out = pd.DataFrame(rows).sort_values("score", ascending=False)
-    
-    out.to_csv(OUT_DIR / f"report_{stamp}.csv", index=False, sep=",", encoding="utf-8")
-
-    tr = OUT_DIR / "track_record.csv"
-    header = not tr.exists() or tr.stat().st_size == 0
-    out.assign(run=stamp).to_csv(tr, mode="a", header=header, index=False, sep=",", encoding="utf-8")
-
-    print("\nTop 25:\n")
-    print(out.head(25).to_string(index=False))
+    out.to_csv(OUT_DIR / f"report_{stamp}.csv", index=False, sep=",")
+    print("\nTop 25:\n", out.head(25).to_string(index=False))
 
 if __name__ == "__main__":
     main()
