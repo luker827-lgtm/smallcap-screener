@@ -1,4 +1,4 @@
-# screener_v9_FINAL.py
+# screener_v11_GROK_APPROVED.py
 # pip install yfinance pandas requests tenacity
 import io, os, math, time, datetime as dt
 from pathlib import Path
@@ -11,8 +11,8 @@ from tenacity import retry, stop_after_attempt, wait_exponential
 
 # ---------------- Config ----------------
 MIN_PRICE, MAX_PRICE   = 10, 500       
-MIN_CAP, MAX_CAP       = 2e9, 500e9    
-MIN_AVG_VOL            = 1_000_000
+MIN_CAP, MAX_CAP       = 2e9, 15e12    # GROK FIX: Allow true mega-caps
+MIN_AVG_VOL            = 250_000       # GROK FIX: Lowered volume
 MIN_DOLLAR_VOL         = 1_000_000
 BATCH_SIZE             = 100
 OUT_DIR                = Path(".")
@@ -132,33 +132,39 @@ def analyse(t, d):
     except Exception:
         return None
 
-    # --- QUICK FILTERS FIRST (Saves Time) ---
+    # --- QUICK FILTERS FIRST ---
     cap = _num(info.get("marketCap"))
     if not (MIN_CAP <= cap <= MAX_CAP):
         return None
-        
-    if info.get("financialCurrency") != "USD":
+
+    # GROK FIX: Prefer listing currency; allow None
+    if info.get("currency") not in (None, "USD"):
         return None
 
-    name = info.get("longName", "").lower()
-    if "fund" in name or "trust" in name or "municipal" in name or "income" in name:
+    name = (info.get("longName") or "").lower()
+    if any(x in name for x in [" etf", " fund", " trust", " municipal"]):
         return None
 
     score, flags = 0, []
 
-    # --- QUALITY FILTER ---
+    # --- QUALITY FILTER (GROK'S FIX) ---
     fcf = _num(info.get("freeCashflow"))
-    debt_eq = _num(info.get("debtToEquity"), 999)
-
-    if fcf < -10e6: 
-        return None 
-    if debt_eq > 250:
+    # Only reject extreme cash burn; missing FCF is allowed
+    if fcf < -50e6:
         return None
-        
+
+    # GROK FIX: Missing debtToEquity must NOT be treated as 999
+    raw_de = info.get("debtToEquity")
+    if raw_de is not None:
+        debt_eq = _num(raw_de)
+        if debt_eq > 400:          # raised threshold
+            return None
+    # else: unknown → pass
+
     score += 15
     if fcf > 0:
         flags.append(f"Positive FCF (${fcf/1e6:.1f}M)")
-    else:
+    elif fcf < 0:
         flags.append(f"Negative FCF (${fcf/1e6:.1f}M)")
 
     # --- FUNDAMENTALS ---
