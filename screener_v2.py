@@ -1,4 +1,4 @@
-# screener_v12_FINAL.py
+# screener_v13_FINAL.py
 # pip install yfinance pandas requests tenacity
 import io, os, math, time, datetime as dt
 from pathlib import Path
@@ -12,7 +12,7 @@ MIN_PRICE, MAX_PRICE   = 10, 500
 MIN_CAP, MAX_CAP       = 2e9, 15e12    
 MIN_AVG_VOL            = 250_000       
 MIN_DOLLAR_VOL         = 1_000_000
-BATCH_SIZE             = 50            # SMALLER BATCHES
+BATCH_SIZE             = 50
 OUT_DIR                = Path(".")
 
 # ---------------- Helpers ----------------
@@ -81,32 +81,31 @@ def analyse(t, d):
         tk   = yf.Ticker(t)
         info = tk.info or {}
         
-        # --- GROK FIXES ---
-        # Reject foreign filers (financialCurrency != USD)
+        # 1. REJECT FOREIGN CURRENCIES
         if info.get("financialCurrency") not in (None, "USD"): return None
         
-        # Reject funds/trusts
+        # 2. REJECT FUNDS, TRUSTS, AND MLPs (K-1 TAX FORMS)
         name = (info.get("longName") or "").lower()
-        if any(x in name for x in [" etf", " fund", " trust", " municipal"]): return None
+        if any(x in name for x in [" etf", " fund", " trust", " municipal", " lp", "partners", "mlp"]):
+            return None
         
         cap = _num(info.get("marketCap"))
         if not (MIN_CAP <= cap <= MAX_CAP): return None
 
         score, flags = 0, []
 
-        # --- QUALITY FILTER (Softened) ---
+        # 3. QUALITY FILTER
         fcf = _num(info.get("freeCashflow"))
         raw_de = info.get("debtToEquity")
         if raw_de is not None:
             if _num(raw_de) > 400: return None
-        # Reject extreme cash burn, allow missing FCF
         if fcf < -50e6: return None
         
         score += 15
         if fcf > 0: flags.append(f"Positive FCF (${fcf/1e6:.1f}M)")
         elif fcf < 0: flags.append(f"Negative FCF (${fcf/1e6:.1f}M)")
 
-        # --- FUNDAMENTALS ---
+        # 4. FUNDAMENTALS
         rev_g   = _num(info.get("revenueGrowth"))
         earn_g  = _num(info.get("earningsGrowth"))
         margin  = _num(info.get("profitMargins"))
@@ -115,31 +114,37 @@ def analyse(t, d):
         if earn_g > 0:     score += 15
         if margin > 0:     score += 10
 
-        # --- ACCUMULATION ---
+        # 5. ACCUMULATION
         vol_ratio = d["Volume"].tail(10).mean() / max(d["Volume"].tail(50).mean(), 1)
         price_move = d["Close"].iloc[-1] / d["Close"].iloc[-10] - 1
         if vol_ratio > 1.3 and -0.03 < price_move < 0.06:
             score += 20; flags.append("Quiet accumulation")
 
-        # --- INSIDERS ---
+        # 6. INSIDERS (HARD REJECT)
         try:
             ins = tk.insider_transactions
-            if ins is not None and not ins.empty:
-                col = "Text" if "Text" in ins.columns else ("Transaction" if "Transaction" in ins.columns else None)
-                if col:
-                    txt = ins[col].astype(str).str.lower()
-                    buys  = int(txt.str.contains("purchase|buy", regex=True).sum())
-                    sells = int(txt.str.contains("sale|sell",       regex=True).sum())
-                    if buys > sells:   score += 15; flags.append(f"Insider buying ({buys})")
-                    elif sells > (buys * 5): score -= 15; flags.append(f"Heavy insider selling ({sells})")
-                    else: flags.append(f"Insider selling ({sells})")
+            if ins is None or ins.empty:
+                return None # No data = reject
+            
+            col = "Text" if "Text" in ins.columns else ("Transaction" if "Transaction" in ins.columns else None)
+            if col is None: return None
+            
+            txt = ins[col].astype(str).str.lower()
+            buys  = int(txt.str.contains("purchase|buy", regex=True).sum())
+            sells = int(txt.str.contains("sale|sell",       regex=True).sum())
+            
+            if buys > sells:   
+                score += 15; flags.append(f"Insider buying ({buys})")
+            elif sells > (buys * 2): 
+                return None # Heavy selling = reject
+            else:
+                flags.append(f"Insider selling ({sells})")
         except Exception:
-            pass
+            return None # If the check crashes, reject it
 
-        # --- VALUATION ---
+        # 7. VALUATION (PEG FIX)
         pe_ratio = _num(info.get("trailingPE"))
         peg_ratio = _num(info.get("pegRatio"))
-        # GROK FIX: Only trust PEG if P/E is positive and PEG is realistic
         if pe_ratio > 0 and 0.2 < peg_ratio < 1.0: 
             score += 15; flags.append(f"Undervalued (PEG {peg_ratio:.2f})")
         elif 1.0 <= peg_ratio < 2.0: score += 5
@@ -153,7 +158,6 @@ def analyse(t, d):
             "sector": info.get("sector"), "flags": "; ".join(flags),
         }
     except Exception as e:
-        # CRASH PROOFING: If one ticker fails, skip it, don't kill the run
         print(f"Error processing {t}: {e}")
         return None
 
