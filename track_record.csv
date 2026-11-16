@@ -833,3 +833,258 @@ ELS,15,62.12,30.5,28.3,4.77,12501,0.045,Real Estate,Positive FCF ($608.6M); Heav
 DHI,15,145.55,14.4,13.5,1.8,39507,-0.032,Consumer Cyclical,Positive FCF ($7815.5M); Heavy insider selling (7); Funds trimming,2026-11-14_070727
 EWTX,15,45.93,5.5,-24.3,,5029,0.0,Healthcare,Positive FCF ($6.6M); Heavy insider selling (34); Funds adding; High short interest 16%; Analysts positive,2026-11-14_070727
 CPRT,0,31.83,20.5,17.6,3.21,29487,0.024,Industrials,Positive FCF ($885.1M); Heavy insider selling (16); Funds trimming; Expensive (PEG 3.21); Earnings in 5 days,2026-11-14_070727
+CVI,100,40.93,15.6,9.8,0.71,4545,0.688,Energy,Positive FCF ($769.2M); Insider buying (34); Funds adding; Undervalued (PEG 0.71); High short interest 19%,2026-11-16_015038
+CLH,95,293.81,29.5,30.2,0.27,15493,0.207,Industrials,Positive FCF ($413.1M); Quiet accumulation; Heavy insider selling (30); Funds adding; Undervalued (PEG 0.27); Analysts positive,2026-11-16_015038
+CRBG,90,36.35,8.2,6.4,,15939,0.186,Financial Services,Positive FCF ($3710.6M); Insider buying (26); Funds adding; Analysts positive,2026-11-16_015038
+CVBF,90,22.52,14.9,11.4,1.47,3930,0.541,Financial Services,Insider buying (8); Funds adding,2026-11-16_015038
+BAM,85,51.53,17.5,23.9,0.92,82339,0.716,Financial Services,Positive FCF ($3760.5M); Insider selling (0); Funds adding; Undervalued (PEG 0.92),2026-11-16_015038
+BBVA,85,25.92,11.4,9.7,0.74,141800,0.184,Financial Services,Insider selling (0); Funds adding; Undervalued (PEG 0.74),2026-11-16_015038
+BSM,85,14.22,13.9,12.3,1.28,3027,0.225,Energy,Quiet accumulation; Insider buying (11); Funds trimming,2026-11-16_015038
+CSTM,85,22.36,5.5,7.7,0.4,3008,0.218,Basic Materials,Positive FCF ($78.9M); Insider selling (25); Funds adding; Undervalued (PEG 0.40),2026-11-16_015038
+CVS,85,89.35,10.4,10.3,0.22,114321,0.054,Healthcare,Positive FCF ($11826.1M); Quiet accumulation; Insider selling (5); Funds adding; Undervalued (PEG 0.22); Analysts positive,2026-11-16_015038
+COP,85,142.28,15.0,12.4,0.92,168223,0.293,Energy,Positive FCF ($11464.6M); Insider selling (14); Funds adding; Undervalued (PEG 0.92),2026-11-16_015038
+BNS,80,92.54,16.8,13.7,1.03,112603,0.117,Financial Services,Insider buying (121); Funds adding,2026-11-16_015038
+BILI,80,13.25,26.0,10.5,0.3,5232,0.082,Communication Services,Insider selling (0); Funds adding; Undervalued (PEG 0.30); Analysts positive; Earnings in 8 days,2026-11-16_015038
+BOBS,80,20.53,19.2,19.6,,2685,0.103,Consumer Cyclical,Positive FCF ($52.5M); Insider buying (6); Funds adding; High short interest 28%; Analysts positive,2026-11-16_015038
+BNL,80,17.6,23.5,25.7,,3525,0.067,Real Estate,Positive FCF ($251.6M); Insider buying (14); Funds adding; Analysts positive,2026-11-16_015038
+BBWI,80,21.39,5.6,7.7,0.78,4313,-0.023,Consumer Cyclical,Positive FCF ($764.6M); Insider buying (6); Funds adding; Undervalued (PEG 0.78); Earnings in 3 days,2026-11-16_015038
+CDW,80,171.65,20.0,13.8,1.33,21424,0.177,Technology,Positive FCF ($867.6M); Insider selling (4); Funds adding; Analysts positive,2026-11-16_015038
+CM,80,115.8,15.4,14.3,1.72,105139,0.166,Financial Services,Insider buying (122); Funds trimming,2026-11-16_015038
+COO,80,62.65,21.5,13.4,0.59,11913,0.006,Healthcare,Positive FCF ($542.6M); Insider buying (14); Funds adding; Undervalued (PEG 0.59),2026-11-16_015038
+CVE,80,29.08,8.6,8.2,,52557,0.211,Energy,Positive FCF ($10272.4M); Insider buying (66); Funds trimming; Analysts positive,2026-11-16_015038
+CMC,80,62.13,10.6,9.2,13.13,6833,0.257,Industrials,Positive FCF ($79.1M); Insider buying (6); Funds adding; Expensive (PEG 13.13); Analysts positive,2026-11-16_015038
+CELH,75,32.42,36.4,19.5,0.29,8123,0.168,Consumer Defensive,Positive FCF ($321.2M); Insider selling (20); Funds adding; Undervalued (PEG 0.29); Analysts positive,2026-11-16_015038
+CBC,75,38.15,20.6,18.5,,9132,0.115,Financial Services,Insider buying (18); Funds adding,2026-11-16_015038
+CHDN,75,99.72,15.4,13.4,1.69,6836,0.019,Consumer Cyclical,Positive FCF ($335.3M); Insider buying (3); Funds adding; Analysts positive,2026-11-16_015038
+CCK,75,121.57,17.0,13.4,0.64,13136,0.159,Consumer Cyclical,Positive FCF ($724.9M); Heavy insider selling (16); Funds adding; Undervalued (PEG 0.64); Analysts positive,2026-11-16_015038
+BSY,75,44.33,43.9,28.1,1.75,13407,0.122,Technology,Positive FCF ($369.8M); Quiet accumulation; Heavy insider selling (18); Funds adding; Analysts positive,2026-11-16_015038
+BVN,75,24.83,5.3,6.9,1.11,6306,0.265,Basic Materials,Positive FCF ($407.1M); Insider selling (0); Funds adding,2026-11-16_015038
+CAI,75,23.04,13.9,85.0,,6608,0.27,Healthcare,Negative FCF ($-25.9M); Insider buying (5); Funds adding; Analysts positive,2026-11-16_015038
+AUB,75,39.38,10.6,9.7,1.08,5512,0.064,Financial Services,Insider buying (4); Funds trimming; Analysts positive,2026-11-16_015038
+BHE,75,63.03,40.9,18.3,0.93,2254,0.191,Technology,Positive FCF ($100.6M); Heavy insider selling (19); Funds adding; Undervalued (PEG 0.93); Analysts positive,2026-11-16_015038
+BIP,75,39.49,282.1,31.0,4.73,31273,0.097,Utilities,Positive FCF ($232.2M); Quiet accumulation; Insider buying (1); Funds adding; Expensive (PEG 4.73); Analysts positive,2026-11-16_015038
+CNQ,75,49.75,10.2,11.1,3.42,101248,0.344,Energy,Positive FCF ($12177.8M); Insider buying (44); Funds adding; Expensive (PEG 3.42),2026-11-16_015038
+CSCO,75,95.64,25.4,15.9,0.88,376533,0.244,Technology,Positive FCF ($10818.8M); Heavy insider selling (75); Funds adding; Undervalued (PEG 0.88); Analysts positive,2026-11-16_015038
+CTRI,75,21.82,38.3,20.5,1.01,2203,0.402,Utilities,Negative FCF ($-41.2M); Insider selling (6); Funds adding,2026-11-16_015038
+CVSA,75,118.17,14.9,11.7,0.87,3930,0.107,Consumer Defensive,Positive FCF ($330.0M); Insider selling (23); Funds adding; Undervalued (PEG 0.87),2026-11-16_015038
+CORT,75,72.94,54.8,14.6,0.81,7983,0.64,Healthcare,Positive FCF ($132.2M); Heavy insider selling (59); Funds adding; Undervalued (PEG 0.81); Analysts positive,2026-11-16_015038
+CPAY,75,462.22,25.4,14.5,0.88,29569,0.179,Technology,Positive FCF ($1995.1M); Heavy insider selling (17); Funds adding; Undervalued (PEG 0.88); Analysts positive,2026-11-16_015038
+CVX,75,219.89,16.1,13.3,0.83,429061,0.348,Energy,Positive FCF ($26048.4M); Heavy insider selling (40); Funds adding; Undervalued (PEG 0.83); Analysts positive,2026-11-16_015038
+DASH,75,171.51,71.2,22.5,0.97,74774,0.34,Consumer Cyclical,Positive FCF ($6371.4M); Heavy insider selling (101); Funds adding; Undervalued (PEG 0.97); Analysts positive,2026-11-16_015038
+CGAU,70,20.24,9.3,10.0,,3920,0.266,Basic Materials,Negative FCF ($-27.5M); Insider buying (101); Funds adding,2026-11-16_015038
+BMA,70,56.86,11.6,5.0,0.47,3636,0.012,Financial Services,Insider selling (0); Funds adding; Undervalued (PEG 0.47); Analysts positive; Earnings in 9 days,2026-11-16_015038
+AZN,70,184.45,26.1,16.3,1.33,286067,0.067,Healthcare,Positive FCF ($5628.0M); Insider selling (0); Funds adding; Analysts positive,2026-11-16_015038
+BEKE,70,17.86,29.8,14.0,0.42,19562,-0.057,Real Estate,Positive FCF ($4347.7M); Insider selling (0); Funds adding; Undervalued (PEG 0.42); Analysts positive; Earnings in 0 days,2026-11-16_015038
+AVNT,70,44.66,22.9,12.3,1.22,4097,0.105,Basic Materials,Positive FCF ($391.3M); Insider selling (0); Funds adding; Analysts positive,2026-11-16_015038
+BSP,70,41.08,93.4,21.4,,26979,1.263,Technology,Insider selling (0); Funds adding; Earnings in 4 days,2026-11-16_015038
+BUD,70,84.81,17.2,17.4,1.76,167002,0.091,Consumer Defensive,Insider selling (0); Funds adding; Analysts positive,2026-11-16_015038
+CE,70,51.41,20.8,8.3,1.74,5642,0.057,Basic Materials,Positive FCF ($1636.4M); Insider buying (16); Funds adding; Analysts positive,2026-11-16_015038
+BAH,70,86.22,13.4,12.8,1.09,10226,-0.039,Industrials,Positive FCF ($788.6M); Insider buying (3); Funds adding,2026-11-16_015038
+AYA,70,22.88,29.7,9.9,,3299,0.901,Basic Materials,Positive FCF ($90.3M); Insider selling (0); Funds adding,2026-11-16_015038
+BN,70,40.97,41.0,7.0,1.27,91459,0.131,Financial Services,Insider selling (0); Funds adding; Analysts positive,2026-11-16_015038
+BP,70,45.7,22.3,7.4,0.04,117707,0.414,Energy,Positive FCF ($17024.0M); Insider selling (0); Funds adding,2026-11-16_015038
+CARG,65,34.81,17.2,11.5,0.75,3112,0.115,Communication Services,Positive FCF ($260.0M); Heavy insider selling (107); Funds adding; Undervalued (PEG 0.75); High short interest 22%; Analysts positive,2026-11-16_015038
+CNC,65,71.27,24.5,12.9,0.84,35283,0.002,Healthcare,Positive FCF ($3082.7M); Insider buying (7); Funds adding; Undervalued (PEG 0.84),2026-11-16_015038
+CRC,65,48.31,,13.9,0.47,4265,0.248,Energy,Positive FCF ($311.9M); Insider selling (13); Funds adding; Undervalued (PEG 0.47); Analysts positive,2026-11-16_015038
+CLBK,65,11.16,37.2,15.1,,3008,0.124,Financial Services,Insider buying (17); Funds adding; Analysts positive,2026-11-16_015038
+CIEN,65,280.54,62.8,23.6,0.28,39783,0.37,Technology,Positive FCF ($633.4M); Heavy insider selling (122); Funds trimming; Undervalued (PEG 0.28); Analysts positive,2026-11-16_015038
+BLCO,65,21.09,,17.7,0.89,7540,0.073,Healthcare,Positive FCF ($404.4M); Insider buying (12); Funds adding; Undervalued (PEG 0.89),2026-11-16_015038
+BROS,65,35.9,46.6,30.1,1.49,4952,0.298,Consumer Cyclical,Positive FCF ($8.4M); Heavy insider selling (40); Funds adding; High short interest 41%; Analysts positive,2026-11-16_015038
+C,65,124.01,12.1,9.5,0.52,205262,0.08,Financial Services,Heavy insider selling (18); Funds adding; Undervalued (PEG 0.52); Analysts positive,2026-11-16_015038
+BURL,65,242.86,21.8,17.9,0.92,15255,0.11,Consumer Cyclical,Positive FCF ($107.4M); Heavy insider selling (37); Funds adding; Undervalued (PEG 0.92); Analysts positive; Earnings in 8 days,2026-11-16_015038
+BCS,65,22.87,8.5,7.3,0.89,75956,0.049,Financial Services,Insider selling (0); Funds adding; Undervalued (PEG 0.89),2026-11-16_015038
+AX,65,91.17,10.4,8.3,0.95,5171,0.21,Financial Services,Heavy insider selling (22); Funds trimming; Undervalued (PEG 0.95); Analysts positive,2026-11-16_015038
+AVGO,65,347.01,44.3,17.8,0.34,1656497,0.855,Technology,Positive FCF ($30596.5M); Heavy insider selling (62); Funds trimming; Undervalued (PEG 0.34); Analysts positive,2026-11-16_015038
+AU,65,86.29,11.2,9.6,0.78,43653,0.084,Basic Materials,Positive FCF ($3579.7M); Heavy insider selling (1); Funds adding; Undervalued (PEG 0.78); Analysts positive,2026-11-16_015038
+CXW,65,31.27,2.1,13.6,1.06,2705,0.282,Industrials,Positive FCF ($78.9M); Heavy insider selling (46); Funds adding; High short interest 18%; Analysts positive,2026-11-16_015038
+CBRE,65,133.12,28.5,15.0,0.78,38365,0.127,Real Estate,Positive FCF ($1273.6M); Heavy insider selling (17); Funds adding; Undervalued (PEG 0.78); Analysts positive,2026-11-16_015038
+CX,65,10.55,65.9,11.8,0.39,15223,0.081,Basic Materials,Positive FCF ($1370.1M); Heavy insider selling (1); Funds adding; Undervalued (PEG 0.39); Analysts positive,2026-11-16_015038
+AVPT,60,16.55,48.7,32.3,,3477,0.195,Technology,Positive FCF ($75.7M); Heavy insider selling (30); Funds adding; Analysts positive,2026-11-16_015038
+AUGO,60,75.02,14.8,9.6,,6291,0.557,Basic Materials,Positive FCF ($433.4M); Heavy insider selling (28); Funds adding; High short interest 16%; Analysts positive,2026-11-16_015038
+BOOT,60,137.61,16.7,14.0,,4115,0.151,Consumer Cyclical,Positive FCF ($2.8M); Heavy insider selling (9); Funds adding; Analysts positive,2026-11-16_015038
+BLLN,60,105.15,114.3,67.0,,5024,0.472,Healthcare,Positive FCF ($11.9M); Heavy insider selling (36); Funds adding; Analysts positive,2026-11-16_015038
+BBT,60,30.76,9.7,9.0,2.6,2562,0.772,Financial Services,Insider buying (10); Funds adding; Expensive (PEG 2.60),2026-11-16_015038
+BOX,60,43.63,63.2,25.1,0.61,5986,0.092,Technology,Positive FCF ($378.3M); Heavy insider selling (76); Funds adding; Undervalued (PEG 0.61); High short interest 18%,2026-11-16_015038
+CAAP,60,24.99,14.0,11.0,,4083,0.12,Industrials,Positive FCF ($605.3M); Insider selling (0); Funds adding; Earnings in 1 days,2026-11-16_015038
+BTSG,60,71.21,50.5,29.3,,14170,0.264,Healthcare,Positive FCF ($1108.6M); Heavy insider selling (20); Funds adding; Analysts positive,2026-11-16_015038
+CATY,60,65.65,12.1,10.6,1.33,4326,0.243,Financial Services,Heavy insider selling (24); Funds adding,2026-11-16_015038
+CLF,60,12.65,,7.3,0.43,7218,0.185,Basic Materials,Positive FCF ($220.2M); Insider selling (5); Funds adding; Undervalued (PEG 0.43),2026-11-16_015038
+CHRD,60,149.93,9.4,7.4,,7974,0.29,Energy,Positive FCF ($870.2M); Heavy insider selling (18); Funds adding; Analysts positive,2026-11-16_015038
+CF,60,125.09,8.8,10.6,0.51,18299,0.121,Basic Materials,Positive FCF ($1589.8M); Heavy insider selling (35); Funds adding; Undervalued (PEG 0.51),2026-11-16_015038
+BANC,60,17.83,,8.6,1.12,2825,0.055,Financial Services,Insider selling (10); Funds adding; Analysts positive,2026-11-16_015038
+CIB,60,89.51,6.0,7.7,0.43,21139,0.058,Financial Services,Insider selling (0); Funds adding; Undervalued (PEG 0.43),2026-11-16_015038
+CFG,60,65.26,13.2,10.1,1.65,27357,0.119,Financial Services,Insider selling (3); Funds trimming; Analysts positive,2026-11-16_015038
+CENX,60,34.03,4.0,3.4,0.06,3369,0.52,Basic Materials,Positive FCF ($190.6M); Heavy insider selling (19); Funds adding; Analysts positive,2026-11-16_015038
+CHWY,60,22.52,34.6,12.0,0.4,9051,0.073,Consumer Cyclical,Positive FCF ($449.1M); Heavy insider selling (50); Funds adding; Undervalued (PEG 0.40),2026-11-16_015038
+CRDO,60,131.51,46.6,13.5,,24718,1.147,Technology,Positive FCF ($248.3M); Heavy insider selling (118); Funds adding; Analysts positive,2026-11-16_015038
+CRGY,60,12.12,80.8,3.8,,5884,0.559,Energy,Positive FCF ($538.6M); Insider selling (4); Funds adding; Analysts positive,2026-11-16_015038
+DAL,60,86.25,17.2,11.8,0.21,56745,0.211,Industrials,Positive FCF ($2492.1M); Heavy insider selling (43); Funds adding; Undervalued (PEG 0.21); Analysts positive,2026-11-16_015038
+CVNA,60,72.37,34.1,34.1,,107969,0.424,Consumer Cyclical,Positive FCF ($652.5M); Heavy insider selling (84); Funds adding; Analysts positive,2026-11-16_015038
+CLBT,60,11.53,46.1,17.2,,2898,0.182,Technology,Positive FCF ($131.4M); Heavy insider selling (15); Funds adding; Analysts positive,2026-11-16_015038
+CLS,60,240.34,22.7,10.8,0.16,30310,0.825,Technology,Positive FCF ($802.8M); Heavy insider selling (42); Funds adding; Analysts positive,2026-11-16_015038
+CROX,55,163.72,12.4,10.2,1.39,7486,0.046,Consumer Cyclical,Positive FCF ($526.0M); Insider selling (12); Funds adding,2026-11-16_015038
+CSX,55,52.05,27.1,22.2,1.85,95949,0.12,Industrials,Positive FCF ($2421.5M); Heavy insider selling (12); Funds adding; Analysts positive,2026-11-16_015038
+CDP,55,33.13,22.4,22.7,1.02,3838,0.097,Real Estate,Positive FCF ($299.2M); Heavy insider selling (6); Funds adding; Analysts positive,2026-11-16_015038
+CHEF,55,106.66,45.8,35.0,1.85,4636,0.112,Consumer Defensive,Positive FCF ($158.9M); Heavy insider selling (18); Funds adding; Analysts positive,2026-11-16_015038
+CNR,55,86.21,54.9,13.8,,4198,0.142,Energy,Positive FCF ($344.7M); Quiet accumulation; Heavy insider selling (10); Funds adding; Analysts positive,2026-11-16_015038
+CHRW,55,134.46,24.1,18.0,1.61,15590,0.295,Industrials,Positive FCF ($379.5M); Heavy insider selling (17); Funds trimming; Analysts positive,2026-11-16_015038
+CAH,55,281.1,36.4,19.5,1.33,64973,0.055,Healthcare,Positive FCF ($5021.1M); Heavy insider selling (19); Funds adding; Analysts positive,2026-11-16_015038
+CAE,55,27.93,45.8,25.8,1.83,8919,-0.026,Industrials,Positive FCF ($751.2M); Insider buying (99); Funds adding,2026-11-16_015038
+BIRK,55,36.3,17.0,13.2,1.06,5994,0.133,Consumer Cyclical,Positive FCF ($154.6M); Insider selling (0); Funds adding; Analysts positive,2026-11-16_015038
+BMO,55,173.24,19.6,14.8,1.57,120418,0.12,Financial Services,Insider buying (64); Funds trimming,2026-11-16_015038
+BRO,55,71.93,22.8,15.1,1.85,23859,0.097,Financial Services,Positive FCF ($1209.8M); Insider buying (4); Funds trimming,2026-11-16_015038
+AVY,55,188.03,20.3,17.0,1.92,14198,0.052,Consumer Cyclical,Positive FCF ($972.8M); Heavy insider selling (9); Funds adding; Analysts positive,2026-11-16_015038
+CNI,55,127.18,22.2,19.8,2.61,76270,0.146,Industrials,Positive FCF ($2455.5M); Insider buying (67); Funds trimming; Expensive (PEG 2.61),2026-11-16_015038
+CMI,55,452.18,18.9,13.3,0.93,61949,0.135,Industrials,Positive FCF ($2342.2M); Heavy insider selling (30); Funds trimming; Undervalued (PEG 0.93); Analysts positive,2026-11-16_015038
+CP,55,94.15,30.2,22.4,2.22,81869,0.152,Industrials,Positive FCF ($2739.6M); Insider selling (0); Funds trimming; Expensive (PEG 2.22); Analysts positive,2026-11-16_015038
+CRM,55,217.84,19.9,13.6,0.78,179282,0.108,Technology,Positive FCF ($17731.9M); Heavy insider selling (32); Funds trimming; Undervalued (PEG 0.78); Analysts positive,2026-11-16_015038
+CHA,55,14.37,14.5,8.8,,2741,0.025,Consumer Cyclical,Positive FCF ($699.3M); Insider selling (0); Funds adding; Analysts positive; Earnings in 11 days,2026-11-16_015038
+CECO,55,54.25,,12.1,1.88,3181,1.047,Industrials,Negative FCF ($-3.1M); Insider selling (8); Funds adding; Analysts positive,2026-11-16_015038
+BWXT,55,122.97,30.2,23.6,1.67,11267,0.1,Industrials,Positive FCF ($289.1M); Heavy insider selling (14); Funds adding; Analysts positive,2026-11-16_015038
+BX,55,120.19,26.8,16.3,1.19,148359,-0.005,Financial Services,Insider selling (10); Funds adding,2026-11-16_015038
+BUSE,55,28.87,11.8,10.8,1.91,2317,-0.068,Financial Services,Insider selling (11); Funds adding,2026-11-16_015038
+BSX,55,44.34,18.7,14.2,0.75,64270,0.014,Healthcare,Positive FCF ($2491.9M); Insider selling (40); Funds adding; Undervalued (PEG 0.75); Analysts positive,2026-11-16_015038
+AYI,55,330.53,19.4,14.2,1.77,9815,0.029,Industrials,Positive FCF ($584.5M); Insider selling (10); Funds adding,2026-11-16_015038
+B,55,37.59,9.6,9.0,2.04,61220,0.223,Basic Materials,Positive FCF ($5373.7M); Insider selling (0); Funds trimming; Expensive (PEG 2.04); Analysts positive,2026-11-16_015038
+AXSM,55,141.69,,41.9,,7453,0.519,Healthcare,Negative FCF ($-24.4M); Quiet accumulation; Heavy insider selling (35); Funds adding; Analysts positive,2026-11-16_015038
+BZ,55,12.96,9.3,8.9,1.24,5670,0.141,Communication Services,Positive FCF ($4073.8M); Heavy insider selling (8); Funds adding; Analysts positive; Earnings in 9 days,2026-11-16_015038
+BGC,55,11.1,22.7,6.9,3.6,5223,0.138,Financial Services,Insider selling (4); Funds adding; Expensive (PEG 3.60); Analysts positive,2026-11-16_015038
+BE,55,191.99,122.3,36.1,0.36,56763,1.381,Industrials,Negative FCF ($-1.7M); Heavy insider selling (74); Funds adding; Undervalued (PEG 0.36),2026-11-16_015038
+BILL,50,54.48,104.8,11.8,0.45,4679,0.125,Technology,Positive FCF ($153.9M); Heavy insider selling (18); Funds adding; Undervalued (PEG 0.45); High short interest 19%; Analysts positive,2026-11-16_015038
+BDC,50,101.88,22.9,10.2,1.05,3984,0.383,Technology,Positive FCF ($56.7M); Heavy insider selling (25); Funds adding; High short interest 15%; Analysts positive,2026-11-16_015038
+AXON,50,315.43,101.4,33.4,1.14,25686,0.279,Industrials,Positive FCF ($66.1M); Heavy insider selling (76); Funds adding; Analysts positive,2026-11-16_015038
+BMRN,50,57.23,,9.0,0.52,11085,0.32,Healthcare,Negative FCF ($-16.0M); Heavy insider selling (10); Funds adding; Undervalued (PEG 0.52); Analysts positive,2026-11-16_015038
+CAKE,50,109.11,25.9,20.8,1.42,5440,0.139,Consumer Cyclical,Positive FCF ($189.7M); Heavy insider selling (24); Funds adding; High short interest 36%,2026-11-16_015038
+BBUC,50,28.68,,13.9,,5892,0.011,Industrials,Positive FCF ($795.4M); Insider buying (96); Funds adding,2026-11-16_015038
+ATRO,50,58.96,19.4,18.2,1.45,2543,0.285,Industrials,Positive FCF ($24.4M); Heavy insider selling (5); Funds adding; Analysts positive,2026-11-16_015038
+AUPH,50,15.73,6.9,13.6,,2108,0.139,Healthcare,Positive FCF ($140.5M); Insider selling (9); Funds adding; Analysts positive,2026-11-16_015038
+BALL,50,65.47,32.9,14.6,1.22,17041,0.239,Consumer Cyclical,Positive FCF ($263.5M); Heavy insider selling (7); Funds adding; Analysts positive,2026-11-16_015038
+AXP,50,320.6,18.1,15.9,1.33,214979,0.113,Financial Services,Heavy insider selling (35); Funds adding,2026-11-16_015038
+CXT,50,56.92,25.9,12.1,,3277,0.117,Industrials,Positive FCF ($258.4M); Insider selling (8); Funds adding; High short interest 22%; Analysts positive,2026-11-16_015038
+CSL,50,396.13,22.2,16.5,1.08,15309,0.086,Industrials,Positive FCF ($582.4M); Heavy insider selling (8); Funds adding,2026-11-16_015038
+CR,50,209.74,36.0,25.6,2.17,12130,0.281,Industrials,Positive FCF ($218.4M); Heavy insider selling (22); Funds adding; Expensive (PEG 2.17); Analysts positive,2026-11-16_015038
+CPB,50,22.77,17.4,12.4,0.59,6806,-0.079,Consumer Defensive,Positive FCF ($634.5M); Insider selling (4); Funds adding; Undervalued (PEG 0.59); High short interest 25%,2026-11-16_015038
+COF,50,195.08,12.0,8.2,0.17,117347,0.062,Financial Services,Heavy insider selling (54); Funds adding; Analysts positive,2026-11-16_015038
+CPA,50,140.87,9.3,7.5,0.94,5750,0.257,Industrials,Negative FCF ($-31.3M); Heavy insider selling (1); Funds trimming; Undervalued (PEG 0.94); Analysts positive; Earnings in 2 days,2026-11-16_015038
+CON,50,42.55,25.2,22.5,,5349,0.086,Healthcare,Positive FCF ($204.9M); Heavy insider selling (4); Funds adding; Analysts positive,2026-11-16_015038
+COR,50,359.03,20.0,16.5,0.79,68513,0.055,Healthcare,Positive FCF ($1790.2M); Heavy insider selling (41); Funds adding; Undervalued (PEG 0.79); Analysts positive,2026-11-16_015038
+CRS,50,291.57,25.7,18.2,1.59,14445,0.088,Industrials,Positive FCF ($211.7M); Heavy insider selling (25); Funds adding,2026-11-16_015038
+AVTR,50,15.54,31.1,17.5,,10530,0.046,Healthcare,Positive FCF ($440.9M); Insider buying (16); Funds adding,2026-11-16_015038
+CBT,50,71.92,17.9,9.7,1.0,3692,0.122,Basic Materials,Positive FCF ($140.6M); Heavy insider selling (4); Funds adding,2026-11-16_015038
+CDE,50,13.98,16.3,7.9,3.75,14286,0.774,Basic Materials,Positive FCF ($836.2M); Insider selling (17); Funds adding; Expensive (PEG 3.75); Analysts positive,2026-11-16_015038
+CHTR,50,138.39,13.0,3.3,4.82,24779,0.091,Communication Services,Positive FCF ($3231.0M); Insider buying (6); Funds adding; Expensive (PEG 4.82); High short interest 45%,2026-11-16_015038
+CDNA,50,77.88,32.9,49.8,,4092,0.393,Healthcare,Positive FCF ($130.4M); Heavy insider selling (38); Funds trimming; Analysts positive,2026-11-16_015038
+CNS,50,71.35,22.0,19.2,1.29,3670,0.111,Financial Services,Positive FCF ($156.8M); Insider selling (6); Funds adding,2026-11-16_015038
+CME,50,317.97,26.1,24.0,4.38,113812,0.13,Financial Services,Positive FCF ($3051.2M); Insider selling (39); Funds adding; Expensive (PEG 4.38),2026-11-16_015038
+AWI,50,175.74,23.4,18.5,2.02,7352,0.119,Industrials,Positive FCF ($212.0M); Insider selling (1); Funds adding; Expensive (PEG 2.02),2026-11-16_015038
+BCE,50,21.43,11.6,11.2,0.22,19984,0.022,Communication Services,Positive FCF ($2416.6M); Insider selling (0); Funds adding; Undervalued (PEG 0.22),2026-11-16_015038
+BBAR,50,10.61,8.0,14.4,4.37,2167,0.051,Financial Services,Insider selling (0); Funds adding; Expensive (PEG 4.37); Earnings in 8 days,2026-11-16_015038
+CLMT,45,34.3,,8.6,0.65,3022,0.561,Basic Materials,Positive FCF ($305.1M); Heavy insider selling (23); Funds adding; Undervalued (PEG 0.65),2026-11-16_015038
+CRCL,45,62.2,37.5,43.7,4.34,15958,0.169,Financial Services,Positive FCF ($261.6M); Heavy insider selling (83); Funds adding; Expensive (PEG 4.34),2026-11-16_015038
+CCEP,45,118.57,22.9,21.4,3.21,52013,0.044,Consumer Defensive,Positive FCF ($1583.0M); Insider selling (0); Funds adding; Expensive (PEG 3.21); Analysts positive,2026-11-16_015038
+COMP,45,10.21,68.1,18.2,,7830,1.111,Real Estate,Positive FCF ($867.7M); Heavy insider selling (24); Funds adding; Analysts positive,2026-11-16_015038
+COLB,45,30.6,10.4,9.1,,8654,0.293,Financial Services,Heavy insider selling (6); Funds trimming,2026-11-16_015038
+CHYM,45,33.55,29.4,20.8,,12876,0.321,Technology,Positive FCF ($484.1M); Heavy insider selling (40); Funds adding; Analysts positive,2026-11-16_015038
+COCO,45,63.12,31.9,27.9,3.02,3602,0.337,Consumer Defensive,Positive FCF ($89.3M); Heavy insider selling (88); Funds adding; Expensive (PEG 3.02); High short interest 16%,2026-11-16_015038
+CRH,45,93.16,17.5,15.7,1.63,61973,0.03,Basic Materials,Positive FCF ($2278.1M); Insider selling (5); Funds adding; Analysts positive,2026-11-16_015038
+CSGP,45,30.96,72.0,17.5,0.11,12456,0.141,Real Estate,Positive FCF ($442.4M); Insider selling (12); Funds adding,2026-11-16_015038
+CUZ,45,29.64,329.3,64.4,1.31,4880,0.048,Real Estate,Positive FCF ($137.6M); Heavy insider selling (2); Funds adding; Analysts positive,2026-11-16_015038
+CURB,45,29.15,116.6,81.0,,3540,0.462,Real Estate,Positive FCF ($157.0M); Heavy insider selling (15); Funds adding; High short interest 25%; Analysts positive,2026-11-16_015038
+CWEN,45,33.42,,38.2,3.67,4050,0.217,Utilities,Positive FCF ($222.2M); Quiet accumulation; Heavy insider selling (1); Funds adding; Expensive (PEG 3.67); Analysts positive,2026-11-16_015038
+CWK,45,13.3,45.9,7.9,0.21,3122,0.077,Real Estate,Positive FCF ($148.9M); Heavy insider selling (6); Funds adding; Undervalued (PEG 0.21),2026-11-16_015038
+BWA,45,50.89,21.6,8.6,0.24,10219,-0.029,Consumer Cyclical,Positive FCF ($998.1M); Heavy insider selling (50); Funds trimming; Undervalued (PEG 0.24); Analysts positive,2026-11-16_015038
+CART,45,58.87,30.8,11.8,2.37,13930,0.166,Consumer Cyclical,Positive FCF ($1011.9M); Heavy insider selling (63); Funds adding; Expensive (PEG 2.37),2026-11-16_015038
+CAG,45,14.73,,9.8,10.86,7032,-0.014,Consumer Defensive,Positive FCF ($419.6M); Insider buying (3); Funds adding; Expensive (PEG 10.86),2026-11-16_015038
+BTI,45,61.89,15.9,11.9,1.56,132940,0.014,Consumer Defensive,Positive FCF ($3525.4M); Insider selling (0); Funds adding; Analysts positive,2026-11-16_015038
+BKNG,45,159.58,17.3,13.0,0.59,118680,-0.013,Consumer Cyclical,Positive FCF ($7609.1M); Heavy insider selling (44); Funds trimming; Undervalued (PEG 0.59); Analysts positive,2026-11-16_015038
+CAMT,45,101.73,39.6,19.8,1.44,4753,0.28,Technology,Heavy insider selling (7); Funds adding,2026-11-16_015038
+CCL,45,29.23,12.9,11.3,1.0,39303,0.035,Consumer Cyclical,Positive FCF ($1807.6M); Heavy insider selling (6); Funds adding; Analysts positive,2026-11-16_015038
+BC,45,76.14,23.4,14.0,0.72,4890,0.069,Consumer Cyclical,Positive FCF ($373.4M); Heavy insider selling (17); Funds adding; Undervalued (PEG 0.72),2026-11-16_015038
+BHP,45,79.49,20.6,15.6,5.95,202022,0.183,Basic Materials,Positive FCF ($9592.4M); Insider selling (0); Funds adding; Expensive (PEG 5.95),2026-11-16_015038
+BPOP,45,157.88,10.2,9.0,1.37,9852,0.048,Financial Services,Heavy insider selling (17); Funds adding; Analysts positive,2026-11-16_015038
+BR,45,192.45,21.3,16.6,1.97,21767,0.05,Technology,Positive FCF ($1347.0M); Quiet accumulation; Heavy insider selling (23); Funds adding,2026-11-16_015038
+AXGN,40,55.93,,79.3,99.04,3341,0.262,Healthcare,Positive FCF ($29.8M); Heavy insider selling (42); Funds adding; Expensive (PEG 99.04); Analysts positive,2026-11-16_015038
+BAC,40,51.02,12.2,9.8,0.93,352049,0.034,Financial Services,Heavy insider selling (8); Funds adding; Undervalued (PEG 0.93); Analysts positive,2026-11-16_015038
+BIIB,40,253.4,108.3,15.6,3.45,37458,0.106,Healthcare,Positive FCF ($808.1M); Insider selling (8); Funds adding; Expensive (PEG 3.45); Analysts positive,2026-11-16_015038
+BANR,40,69.29,11.8,10.4,1.83,2525,0.038,Financial Services,Insider selling (0); Funds adding,2026-11-16_015038
+BWLP,40,22.58,7.7,,,3428,-0.031,Energy,Positive FCF ($392.9M); Insider selling (0); Funds trimming; Earnings in 8 days,2026-11-16_015038
+BKU,40,43.8,11.8,10.1,0.27,3074,0.028,Financial Services,Heavy insider selling (12); Funds trimming; Undervalued (PEG 0.27),2026-11-16_015038
+BMI,40,154.72,35.7,31.0,3.68,4485,0.001,Technology,Positive FCF ($123.4M); Insider selling (13); Funds adding; Expensive (PEG 3.68); High short interest 19%,2026-11-16_015038
+BOKF,40,130.28,11.8,12.1,1.46,7916,0.028,Financial Services,Heavy insider selling (13); Funds adding,2026-11-16_015038
+BNY,40,153.41,16.9,14.7,1.12,103229,0.115,Financial Services,Heavy insider selling (13); Funds trimming,2026-11-16_015038
+CARR,40,54.2,,17.0,1.07,44344,0.123,Industrials,Positive FCF ($1944.1M); Insider selling (3); Funds adding,2026-11-16_015038
+AXS,40,108.72,8.3,8.1,1.18,7799,0.069,Financial Services,Positive FCF ($2079.0M); Heavy insider selling (8); Funds adding; Analysts positive,2026-11-16_015038
+CALY,40,17.1,14.0,17.7,0.72,3074,-0.056,Consumer Cyclical,Positive FCF ($57.8M); Insider selling (8); Funds adding; Undervalued (PEG 0.72),2026-11-16_015038
+CNM,40,45.0,18.5,13.2,1.43,8300,0.025,Industrials,Positive FCF ($477.0M); Heavy insider selling (24); Funds adding,2026-11-16_015038
+CI,40,297.0,13.1,8.9,0.75,78260,0.056,Healthcare,Positive FCF ($8189.1M); Heavy insider selling (13); Funds trimming; Undervalued (PEG 0.75); Analysts positive,2026-11-16_015038
+CMCSA,40,25.16,8.0,7.1,1.36,89343,-0.061,Communication Services,Positive FCF ($13077.5M); Heavy insider selling (6); Funds adding,2026-11-16_015038
+CINF,40,189.65,11.1,20.6,2.19,29113,-0.182,Financial Services,Positive FCF ($2405.4M); Insider buying (6); Funds adding; Expensive (PEG 2.19),2026-11-16_015038
+CGNX,40,50.01,35.0,24.7,2.71,8421,0.132,Technology,Positive FCF ($215.1M); Heavy insider selling (18); Funds adding; Expensive (PEG 2.71); Analysts positive,2026-11-16_015038
+CMG,40,35.28,33.0,26.6,1.81,44628,0.096,Consumer Cyclical,Positive FCF ($1184.1M); Heavy insider selling (23); Funds adding; Analysts positive,2026-11-16_015038
+CNX,40,36.56,6.0,8.7,1.93,5223,-0.07,Energy,Positive FCF ($237.2M); Insider selling (4); Funds adding; High short interest 17%,2026-11-16_015038
+COHU,40,43.59,,18.2,1.15,2064,0.37,Technology,Positive FCF ($75.0M); Heavy insider selling (24); Funds adding; High short interest 22%; Analysts positive,2026-11-16_015038
+CNH,40,11.91,56.7,17.7,0.33,19126,-0.01,Industrials,Positive FCF ($1041.6M); Heavy insider selling (26); Funds adding; Undervalued (PEG 0.33); Analysts positive,2026-11-16_015038
+DAR,40,55.99,10.6,8.7,4.31,8675,0.145,Consumer Defensive,Positive FCF ($422.1M); Heavy insider selling (16); Funds adding; Expensive (PEG 4.31); Analysts positive,2026-11-16_015038
+CUBI,40,85.26,10.3,8.6,1.18,2844,0.041,Financial Services,Heavy insider selling (19); Funds adding,2026-11-16_015038
+CTSH,40,63.01,11.5,10.0,0.81,28167,0.046,Technology,Positive FCF ($2079.3M); Heavy insider selling (36); Funds trimming; Undervalued (PEG 0.81),2026-11-16_015038
+CTOS,40,10.0,76.9,30.3,,2272,0.027,Industrials,Positive FCF ($91.1M); Insider selling (0); Funds adding; Analysts positive,2026-11-16_015038
+CRL,40,337.97,367.4,26.1,0.12,16195,-0.022,Healthcare,Positive FCF ($443.2M); Heavy insider selling (19); Funds adding; Analysts positive,2026-11-16_015038
+COKE,35,214.34,25.2,5.5,3.04,14267,0.054,Consumer Defensive,Positive FCF ($368.3M); Heavy insider selling (3); Funds adding; Expensive (PEG 3.04),2026-11-16_015038
+CNA,35,48.55,12.8,10.6,0.92,13138,0.001,Financial Services,Positive FCF ($2841.4M); Heavy insider selling (19); Funds adding; Undervalued (PEG 0.92); High short interest 19%,2026-11-16_015038
+CBRS,35,108.72,,58.5,,26419,0.553,Technology,Heavy insider selling (23); Funds adding; Analysts positive,2026-11-16_015038
+CG,35,39.77,41.9,8.2,0.65,14075,-0.185,Financial Services,Heavy insider selling (5); Funds adding; Undervalued (PEG 0.65),2026-11-16_015038
+CDNS,35,323.01,64.2,32.8,2.35,88627,0.22,Technology,Positive FCF ($1746.4M); Heavy insider selling (72); Funds adding; Expensive (PEG 2.35); Analysts positive,2026-11-16_015038
+CCI,35,90.83,36.5,31.0,0.71,38646,-0.072,Real Estate,Positive FCF ($981.0M); Heavy insider selling (13); Funds adding; Undervalued (PEG 0.71),2026-11-16_015038
+CAVA,35,58.23,105.9,82.1,5.03,6804,0.22,Consumer Cyclical,Negative FCF ($-9.4M); Heavy insider selling (58); Funds adding; Expensive (PEG 5.03); Analysts positive,2026-11-16_015038
+CFR,35,158.17,14.7,13.1,2.88,9835,0.056,Financial Services,Heavy insider selling (9); Funds adding; Expensive (PEG 2.88),2026-11-16_015038
+CBOE,35,375.42,26.7,24.2,3.32,39168,0.19,Financial Services,Positive FCF ($848.6M); Heavy insider selling (16); Funds trimming; Expensive (PEG 3.32),2026-11-16_015038
+CBSH,35,55.74,13.4,12.2,2.06,7890,0.139,Financial Services,Heavy insider selling (29); Funds adding; Expensive (PEG 2.06),2026-11-16_015038
+CCJ,35,70.73,107.2,41.3,1.92,30805,0.007,Energy,Positive FCF ($197.1M); Insider selling (0); Funds trimming; Analysts positive,2026-11-16_015038
+CRWD,35,226.61,3776.8,140.7,5.85,232034,0.258,Technology,Positive FCF ($1995.4M); Heavy insider selling (129); Funds adding; Expensive (PEG 5.85); Analysts positive,2026-11-16_015038
+COIN,35,127.65,,52.0,0.58,33796,-0.342,Financial Services,Positive FCF ($3682.0M); Heavy insider selling (72); Funds trimming; Undervalued (PEG 0.58); Analysts positive,2026-11-16_015038
+CTAS,35,226.24,44.6,36.7,3.55,89834,0.109,Industrials,Positive FCF ($1744.0M); Heavy insider selling (7); Funds adding; Expensive (PEG 3.55),2026-11-16_015038
+BOH,35,69.47,12.3,10.6,2.1,2724,0.088,Financial Services,Heavy insider selling (9); Funds adding; Expensive (PEG 2.10),2026-11-16_015038
+BJ,35,110.34,24.1,21.9,2.4,13938,0.157,Consumer Defensive,Positive FCF ($246.7M); Heavy insider selling (35); Funds trimming; Expensive (PEG 2.40); Earnings in 4 days,2026-11-16_015038
+BMY,35,63.43,14.1,9.5,17.39,129656,0.069,Healthcare,Positive FCF ($6364.6M); Insider selling (6); Funds adding; Expensive (PEG 17.39),2026-11-16_015038
+AXTI,35,41.84,85.4,16.4,12.09,2750,1.626,Technology,Positive FCF ($18.6M); Heavy insider selling (33); Funds adding; Expensive (PEG 12.09); High short interest 21%; Analysts positive,2026-11-16_015038
+BEPC,35,30.71,,-64.7,2.3,5701,0.228,Utilities,Negative FCF ($-41.2M); Insider selling (0); Funds adding; Expensive (PEG 2.30),2026-11-16_015038
+BRX,35,30.3,22.0,27.6,,9298,0.055,Real Estate,Positive FCF ($648.2M); Heavy insider selling (9); Funds adding; Analysts positive,2026-11-16_015038
+BDX,35,218.03,43.1,15.3,1.11,59388,-0.105,Healthcare,Positive FCF ($4142.5M); Heavy insider selling (41); Funds trimming; Analysts positive,2026-11-16_015038
+BLDR,30,60.68,164.0,25.7,2.02,6530,-0.022,Industrials,Positive FCF ($140.3M); Insider buying (4); Funds trimming; Expensive (PEG 2.02),2026-11-16_015038
+BAP,30,368.82,13.4,10.8,4.55,29291,0.134,Financial Services,Heavy insider selling (2); Funds trimming; Expensive (PEG 4.55); Analysts positive,2026-11-16_015038
+BKR,30,49.44,17.0,17.5,1.41,49098,0.145,Energy,Positive FCF ($5079.8M); Heavy insider selling (31); Funds trimming; Analysts positive,2026-11-16_015038
+BBY,30,104.07,17.3,14.4,1.85,21826,0.036,Consumer Cyclical,Positive FCF ($1403.4M); Heavy insider selling (27); Funds trimming; Earnings in 8 days,2026-11-16_015038
+BRKR,30,61.59,,25.1,1.52,9406,0.016,Healthcare,Positive FCF ($204.3M); Insider selling (15); Funds adding,2026-11-16_015038
+BWIN,30,32.05,,12.9,,4532,0.314,Financial Services,Positive FCF ($589.7M); Heavy insider selling (20); Funds adding,2026-11-16_015038
+CHD,30,113.0,34.7,27.9,3.17,26672,0.01,Consumer Defensive,Positive FCF ($777.2M); Insider selling (25); Funds trimming; Expensive (PEG 3.17),2026-11-16_015038
+CNO,30,57.47,13.2,11.1,1.29,5250,-0.086,Financial Services,Positive FCF ($1034.1M); Heavy insider selling (30); Funds trimming,2026-11-16_015038
+BCPC,30,173.14,32.7,27.2,2.96,5502,0.086,Basic Materials,Positive FCF ($139.5M); Heavy insider selling (3); Funds trimming; Expensive (PEG 2.96); Analysts positive,2026-11-16_015038
+CW,30,472.06,31.5,26.9,2.0,17123,0.096,Industrials,Positive FCF ($503.1M); Heavy insider selling (51); Funds trimming; Expensive (PEG 2.00); Analysts positive,2026-11-16_015038
+BCH,25,39.19,15.0,12.6,2.39,19794,0.008,Financial Services,Insider selling (0); Funds adding; Expensive (PEG 2.39),2026-11-16_015038
+BCC,25,67.39,19.8,17.9,2.94,2345,0.081,Basic Materials,Positive FCF ($83.2M); Heavy insider selling (12); Funds trimming; Expensive (PEG 2.94),2026-11-16_015038
+CB,25,375.74,13.2,12.7,2.83,143562,0.003,Financial Services,Positive FCF ($11234.8M); Heavy insider selling (32); Funds adding; Expensive (PEG 2.83),2026-11-16_015038
+CENTA,25,40.41,15.0,13.1,1.87,2529,-0.082,Consumer Defensive,Positive FCF ($342.3M); Heavy insider selling (15); Funds adding; Earnings in 9 days,2026-11-16_015038
+CHKP,25,147.18,17.7,13.3,1.3,15027,-0.011,Technology,Positive FCF ($716.4M); Heavy insider selling (7); Funds adding,2026-11-16_015038
+CUBE,25,44.91,29.5,27.7,5.33,10077,0.031,Real Estate,Positive FCF ($483.5M); Heavy insider selling (6); Funds adding; Expensive (PEG 5.33),2026-11-16_015038
+DAN,25,23.9,,7.0,4.21,2386,0.063,Consumer Cyclical,Positive FCF ($637.2M); Heavy insider selling (2); Funds adding; Expensive (PEG 4.21); Analysts positive,2026-11-16_015038
+BSAC,25,32.43,12.5,10.8,2.41,15278,-0.042,Financial Services,Insider selling (0); Funds adding; Expensive (PEG 2.41),2026-11-16_015038
+BRZE,25,46.64,,47.5,1.64,5298,0.262,Technology,Positive FCF ($196.3M); Heavy insider selling (72); Funds trimming,2026-11-16_015038
+BRC,25,82.71,19.2,11.5,1.67,3879,0.1,Industrials,Positive FCF ($166.7M); Heavy insider selling (14); Funds trimming; Earnings in 1 days,2026-11-16_015038
+ATR,25,143.09,34.2,23.1,3.14,9070,0.06,Healthcare,Positive FCF ($255.7M); Heavy insider selling (25); Funds adding; Expensive (PEG 3.14); Analysts positive,2026-11-16_015038
+ATRC,25,56.84,183.4,123.5,10.0,2894,0.15,Healthcare,Positive FCF ($37.1M); Heavy insider selling (25); Funds adding; Expensive (PEG 10.00); Analysts positive,2026-11-16_015038
+AVAV,20,117.52,,26.7,1.02,5972,0.057,Industrials,Negative FCF ($-25.9M); Heavy insider selling (26); Funds trimming; Analysts positive,2026-11-16_015038
+BFH,15,98.61,7.7,7.1,2.1,3743,0.036,Financial Services,Insider selling (2); Funds trimming; Expensive (PEG 2.10),2026-11-16_015038
+CPNG,15,15.19,,67.8,2.59,27225,0.075,Consumer Cyclical,Positive FCF ($525.1M); Heavy insider selling (30); Funds adding; Expensive (PEG 2.59); Analysts positive,2026-11-16_015038
+COLM,15,73.47,16.2,16.9,2.19,3701,0.02,Consumer Cyclical,Positive FCF ($182.1M); Heavy insider selling (13); Funds trimming; Expensive (PEG 2.19); High short interest 19%,2026-11-16_015038
+CWST,15,100.2,,66.5,3.29,6377,0.152,Industrials,Positive FCF ($107.9M); Heavy insider selling (42); Funds trimming; Expensive (PEG 3.29); Analysts positive,2026-11-16_015038
+AXTA,10,36.56,23.4,13.7,2.04,7825,0.018,Basic Materials,Positive FCF ($563.9M); Heavy insider selling (2); Funds adding; Expensive (PEG 2.04),2026-11-16_015038
+BKE,10,43.6,10.0,10.8,3.32,2246,0.046,Consumer Cyclical,Positive FCF ($131.7M); Heavy insider selling (32); Funds adding; Expensive (PEG 3.32); Earnings in 4 days,2026-11-16_015038
+BFAM,10,52.68,,9.3,,2525,0.048,Consumer Cyclical,Positive FCF ($252.9M); Heavy insider selling (20); Funds adding,2026-11-16_015038
+BHF,10,43.89,4.4,2.2,,2524,-0.527,Financial Services,Positive FCF ($17781.7M); Heavy insider selling (11); Funds trimming,2026-11-16_015038
+BIO,10,366.36,9.7,37.0,4.01,9852,0.005,Healthcare,Positive FCF ($271.6M); Heavy insider selling (6); Funds adding; Expensive (PEG 4.01),2026-11-16_015038
+CAR,10,125.45,,33.0,0.17,4433,-0.024,Industrials,Positive FCF ($1395.4M); Heavy insider selling (15); Funds adding; High short interest 45%,2026-11-16_015038
+BXP,10,63.78,19.1,34.6,2.37,11521,0.053,Real Estate,Positive FCF ($1114.3M); Heavy insider selling (12); Funds trimming; Expensive (PEG 2.37),2026-11-16_015038
+CRUS,10,120.19,15.2,15.4,9.35,5993,-0.003,Technology,Positive FCF ($412.7M); Heavy insider selling (37); Funds adding; Expensive (PEG 9.35),2026-11-16_015038
+BAX,5,25.81,,12.6,36.68,13353,0.05,Healthcare,Positive FCF ($1222.5M); Insider selling (0); Funds trimming; Expensive (PEG 36.68),2026-11-16_015038
+BATRK,0,51.06,,-62.5,,3293,0.042,Communication Services,Positive FCF ($38.8M); Heavy insider selling (35); Funds trimming,2026-11-16_015038
+CPRT,0,31.83,20.5,17.6,3.19,29487,0.024,Industrials,Positive FCF ($885.1M); Heavy insider selling (16); Funds trimming; Expensive (PEG 3.19); Earnings in 3 days,2026-11-16_015038
