@@ -1,4 +1,4 @@
-# screener_v13_FINAL.py
+# screener_v14_FINAL.py
 # pip install yfinance pandas requests tenacity
 import io, os, math, time, datetime as dt
 from pathlib import Path
@@ -72,7 +72,7 @@ def price_volume_filter(tickers):
             if avgvol < MIN_AVG_VOL: continue
             if avgvol * close < MIN_DOLLAR_VOL: continue
             keep[t] = d
-        time.sleep(1.0)
+        time.sleep(1.5) # Slightly longer sleep to avoid rate limits
     return keep
 
 # ---------------- Stage 2: per-ticker analysis ----------------
@@ -81,10 +81,12 @@ def analyse(t, d):
         tk   = yf.Ticker(t)
         info = tk.info or {}
         
-        # 1. REJECT FOREIGN CURRENCIES
-        if info.get("financialCurrency") not in (None, "USD"): return None
+        # 1. CURRENCY CHECK (Loosened)
+        curr = info.get("currency")
+        if curr and curr != "USD": 
+            return None
         
-        # 2. REJECT FUNDS, TRUSTS, AND MLPs (K-1 TAX FORMS)
+        # 2. K-1 / FUND FILTER
         name = (info.get("longName") or "").lower()
         if any(x in name for x in [" etf", " fund", " trust", " municipal", " lp", "partners", "mlp"]):
             return None
@@ -120,29 +122,25 @@ def analyse(t, d):
         if vol_ratio > 1.3 and -0.03 < price_move < 0.06:
             score += 20; flags.append("Quiet accumulation")
 
-        # 6. INSIDERS (HARD REJECT)
+        # 6. INSIDERS (SOFT REJECT - GROK'S FIX)
         try:
             ins = tk.insider_transactions
-            if ins is None or ins.empty:
-                return None # No data = reject
-            
-            col = "Text" if "Text" in ins.columns else ("Transaction" if "Transaction" in ins.columns else None)
-            if col is None: return None
-            
-            txt = ins[col].astype(str).str.lower()
-            buys  = int(txt.str.contains("purchase|buy", regex=True).sum())
-            sells = int(txt.str.contains("sale|sell",       regex=True).sum())
-            
-            if buys > sells:   
-                score += 15; flags.append(f"Insider buying ({buys})")
-            elif sells > (buys * 2): 
-                return None # Heavy selling = reject
-            else:
-                flags.append(f"Insider selling ({sells})")
+            if ins is not None and not ins.empty:
+                col = "Text" if "Text" in ins.columns else ("Transaction" if "Transaction" in ins.columns else None)
+                if col:
+                    txt = ins[col].astype(str).str.lower()
+                    buys  = int(txt.str.contains("purchase|buy", regex=True).sum())
+                    sells = int(txt.str.contains("sale|sell",       regex=True).sum())
+                    if buys > sells:
+                        score += 15; flags.append(f"Insider buying ({buys})")
+                    elif sells > (buys * 5):
+                        score -= 10; flags.append(f"Heavy insider selling ({sells})")
+                    else:
+                        flags.append(f"Insider selling ({sells})")
         except Exception:
-            return None # If the check crashes, reject it
+            pass # If it crashes, just move on
 
-        # 7. VALUATION (PEG FIX)
+        # 7. VALUATION
         pe_ratio = _num(info.get("trailingPE"))
         peg_ratio = _num(info.get("pegRatio"))
         if pe_ratio > 0 and 0.2 < peg_ratio < 1.0: 
