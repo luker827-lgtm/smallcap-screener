@@ -1,15 +1,17 @@
-# screener_v16_DIAGNOSTIC.py
+# screener_v13_FINAL_softened.py
+# pip install yfinance pandas requests tenacity
 import io, os, math, time, datetime as dt
 from pathlib import Path
+
 import pandas as pd
 import requests
 import yfinance as yf
 from tenacity import retry, stop_after_attempt, wait_exponential
 
 # ---------------- Config ----------------
-MIN_PRICE, MAX_PRICE   = 10, 500       
-MIN_CAP, MAX_CAP       = 2e9, 15e12    
-MIN_AVG_VOL            = 250_000       
+MIN_PRICE, MAX_PRICE   = 10, 500
+MIN_CAP, MAX_CAP       = 2e9, 15e12
+MIN_AVG_VOL            = 250_000
 MIN_DOLLAR_VOL         = 1_000_000
 BATCH_SIZE             = 50
 OUT_DIR                = Path(".")
@@ -44,21 +46,16 @@ def _download(batch):
 def price_volume_filter(tickers):
     keep = {}
     total_batches = (len(tickers) + BATCH_SIZE - 1) // BATCH_SIZE
-    
+
     for i in range(0, len(tickers), BATCH_SIZE):
         batch = tickers[i:i + BATCH_SIZE]
         batch_num = (i // BATCH_SIZE) + 1
-        
-        # DIAGNOSTIC PRINT 1: Show batch progress
         print(f"Processing batch {batch_num}/{total_batches} ({batch[0]} to {batch[-1]})...")
-        
+
         try:
             data = _download(batch)
-            # DIAGNOSTIC PRINT 2: Show how many rows came back
-            row_count = len(data) if data is not None else 0
-            print(f"  -> Downloaded {row_count} rows of data.")
         except Exception as e:
-            print(f"  -> Download failed: {e}")
+            print(f"  [batch {batch_num}] download failed: {e}")
             continue
 
         if data is None or data.empty: continue
@@ -68,20 +65,15 @@ def price_volume_filter(tickers):
         for t in batch:
             if t not in data.columns.get_level_values(0): continue
             d = data[t].dropna()
-            
-            # DIAGNOSTIC PRINT 3: Check for insufficient data
-            if len(d) < 40: 
-                if t == batch[0]: print(f"  -> {t} has only {len(d)} rows. Skipping batch.")
-                continue
-                
+            if len(d) < 40 or "Close" not in d or "Volume" not in d: continue
             close  = float(d["Close"].iloc[-1])
             avgvol = float(d["Volume"].tail(20).mean())
-            
+
             if not (MIN_PRICE <= close <= MAX_PRICE): continue
             if avgvol < MIN_AVG_VOL: continue
             if avgvol * close < MIN_DOLLAR_VOL: continue
             keep[t] = d
-        time.sleep(1.5)
+        time.sleep(1.0)
     return keep
 
 # ---------------- Stage 2: per-ticker analysis ----------------
@@ -89,42 +81,35 @@ def analyse(t, d):
     try:
         tk   = yf.Ticker(t)
         info = tk.info or {}
-        
-        # 1. CURRENCY CHECK
-        curr = info.get("currency")
-        if curr and curr != "USD": 
-            print(f"Rejected {t}: Currency is {curr}")
+
+        # Soft currency check (only hard-reject explicit non-USD listing currency)
+        if info.get("currency") and info.get("currency") != "USD":
             return None
-        
-        # 2. K-1 / FUND FILTER
+
+        # Name filter (narrowed — removed broad LP/partners/MLP terms)
         name = (info.get("longName") or "").lower()
-        if any(x in name for x in [" etf", " fund", " trust", " municipal", " lp", "partners", "mlp"]):
-            print(f"Rejected {t}: Name filter hit ({name})")
+        if any(x in name for x in [" etf", " fund", " trust", " municipal"]):
             return None
-        
+
         cap = _num(info.get("marketCap"))
-        if not (MIN_CAP <= cap <= MAX_CAP): 
-            print(f"Rejected {t}: Market cap out of range ({cap})")
-            return None
+        if not (MIN_CAP <= cap <= MAX_CAP): return None
 
         score, flags = 0, []
 
-        # 3. QUALITY FILTER
+        # Quality filters (softened FCF)
         fcf = _num(info.get("freeCashflow"))
         raw_de = info.get("debtToEquity")
-        if raw_de is not None:
-            if _num(raw_de) > 400: 
-                print(f"Rejected {t}: High debt ({raw_de})")
-                return None
-        if fcf < -50e6: 
-            print(f"Rejected {t}: Extreme negative FCF ({fcf})")
+        if raw_de is not None and _num(raw_de) > 400:
             return None
-        
-        score += 15
-        if fcf > 0: flags.append(f"Positive FCF (${fcf/1e6:.1f}M)")
-        elif fcf < 0: flags.append(f"Negative FCF (${fcf/1e6:.1f}M)")
+        # Hard FCF reject removed; negative FCF is now only a flag
 
-        # 4. FUNDAMENTALS
+        score += 15
+        if fcf > 0:
+            flags.append(f"Positive FCF (${fcf/1e6:.1f}M)")
+        elif fcf < 0:
+            flags.append(f"Negative FCF (${fcf/1e6:.1f}M)")
+
+        # Fundamentals
         rev_g   = _num(info.get("revenueGrowth"))
         earn_g  = _num(info.get("earningsGrowth"))
         margin  = _num(info.get("profitMargins"))
@@ -133,13 +118,14 @@ def analyse(t, d):
         if earn_g > 0:     score += 15
         if margin > 0:     score += 10
 
-        # 5. ACCUMULATION
+        # Accumulation
         vol_ratio = d["Volume"].tail(10).mean() / max(d["Volume"].tail(50).mean(), 1)
         price_move = d["Close"].iloc[-1] / d["Close"].iloc[-10] - 1
         if vol_ratio > 1.3 and -0.03 < price_move < 0.06:
-            score += 20; flags.append("Quiet accumulation")
+            score += 20
+            flags.append("Quiet accumulation")
 
-        # 6. INSIDERS (SOFT REJECT)
+        # Insiders (soft — no hard reject)
         try:
             ins = tk.insider_transactions
             if ins is not None and not ins.empty:
@@ -147,31 +133,40 @@ def analyse(t, d):
                 if col:
                     txt = ins[col].astype(str).str.lower()
                     buys  = int(txt.str.contains("purchase|buy", regex=True).sum())
-                    sells = int(txt.str.contains("sale|sell",       regex=True).sum())
+                    sells = int(txt.str.contains("sale|sell", regex=True).sum())
                     if buys > sells:
-                        score += 15; flags.append(f"Insider buying ({buys})")
-                    elif sells > (buys * 5):
-                        print(f"Rejected {t}: Heavy insider selling ({sells})")
-                        return None
+                        score += 15
+                        flags.append(f"Insider buying ({buys})")
+                    elif sells > (buys * 2):
+                        score -= 10
+                        flags.append(f"Heavy insider selling ({sells})")
                     else:
                         flags.append(f"Insider selling ({sells})")
         except Exception:
-            pass
+            pass  # skip on any error, do not reject
 
-        # 7. VALUATION
+        # Valuation
         pe_ratio = _num(info.get("trailingPE"))
         peg_ratio = _num(info.get("pegRatio"))
-        if pe_ratio > 0 and 0.2 < peg_ratio < 1.0: 
-            score += 15; flags.append(f"Undervalued (PEG {peg_ratio:.2f})")
-        elif 1.0 <= peg_ratio < 2.0: score += 5
-        elif peg_ratio >= 2.0: score -= 10; flags.append(f"Expensive (PEG {peg_ratio:.2f})")
+        if pe_ratio > 0 and 0.2 < peg_ratio < 1.0:
+            score += 15
+            flags.append(f"Undervalued (PEG {peg_ratio:.2f})")
+        elif 1.0 <= peg_ratio < 2.0:
+            score += 5
+        elif peg_ratio >= 2.0:
+            score -= 10
+            flags.append(f"Expensive (PEG {peg_ratio:.2f})")
 
         return {
-            "ticker": t, "score": score, "close": round(float(d["Close"].iloc[-1]), 2),
+            "ticker": t,
+            "score": score,
+            "close": round(float(d["Close"].iloc[-1]), 2),
             "P/E": round(pe_ratio, 1) if pe_ratio else None,
             "PEG": round(peg_ratio, 2) if peg_ratio else None,
-            "market_cap_m": round(cap / 1e6), "rev_growth": round(rev_g, 3),
-            "sector": info.get("sector"), "flags": "; ".join(flags),
+            "market_cap_m": round(cap / 1e6),
+            "rev_growth": round(rev_g, 3),
+            "sector": info.get("sector"),
+            "flags": "; ".join(flags),
         }
     except Exception as e:
         print(f"Error processing {t}: {e}")
@@ -184,6 +179,13 @@ def main():
     cands = price_volume_filter(universe)
     print(f"Passed price/volume: {len(cands)}")
 
+    if not cands:
+        print("STAGE 1 FAILED — no tickers passed price/volume.")
+        stamp = dt.datetime.now().strftime("%Y-%m-%d_%H%M%S")
+        pd.DataFrame([{"ticker": "NONE", "score": 0, "flags": "No stocks passed Stage 1."}]).to_csv(
+            OUT_DIR / f"report_{stamp}_EMPTY.csv", index=False)
+        return
+
     rows = []
     for t, d in cands.items():
         r = analyse(t, d)
@@ -191,10 +193,11 @@ def main():
             rows.append(r)
 
     stamp = dt.datetime.now().strftime("%Y-%m-%d_%H%M%S")
-    
+
     if not rows:
         print("No candidates passed the filters today.")
-        pd.DataFrame([{"ticker": "NONE", "score": 0, "flags": "No stocks passed."}]).to_csv(OUT_DIR / f"report_{stamp}_EMPTY.csv", index=False)
+        pd.DataFrame([{"ticker": "NONE", "score": 0, "flags": "No stocks passed."}]).to_csv(
+            OUT_DIR / f"report_{stamp}_EMPTY.csv", index=False)
         return
 
     out = pd.DataFrame(rows).sort_values("score", ascending=False)
