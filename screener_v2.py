@@ -9,7 +9,7 @@ import yfinance as yf
 from tenacity import retry, stop_after_attempt, wait_exponential
 
 # ---------------- Config ----------------
-MIN_PRICE, MAX_PRICE   = 10, 500
+MIN_PRICE, MAX_PRICE   = 10, 2000
 MIN_CAP, MAX_CAP       = 2e9, 15e12
 MIN_AVG_VOL            = 250_000
 MIN_DOLLAR_VOL         = 1_000_000
